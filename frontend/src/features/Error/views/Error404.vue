@@ -1,17 +1,14 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { useConfirmAccount } from '../composables/useConfirmAccount'
+import { onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 
-const route = useRoute()
 const router = useRouter()
-const token = route.params.token
 
 onMounted(async () => {
   // redirigir después de confirmar
   setTimeout(() => {
-    router.push('/login')
-  }, 1000)
+    router.push('/')
+  }, 500)
 })
 </script>
 
