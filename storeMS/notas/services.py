@@ -1,0 +1,44 @@
+from django.shortcuts import get_object_or_404
+from django.core.exceptions import ValidationError
+from datetime import timedelta
+from django.db import transaction
+from .models import*
+
+class NotasService:
+    @staticmethod
+    @transaction.atomic
+
+    def obtener_notas_por_admin():
+        notasList = Nota.objects.filter().order_by( "-is_active")
+        return notasList
+    
+
+class NewNotaService:
+    @staticmethod
+    @transaction.atomic
+    def crear_nota(*,nombre_nota, observaciones=None):
+
+        nota = Nota.objects.create(
+            nombre_nota=nombre_nota,
+            observaciones=observaciones,
+            is_active=True,
+        )
+
+        return nota
+    
+class EditNotaService:
+    @staticmethod
+    @transaction.atomic
+    def editar_nota(*, id, nombre_nota=None, observaciones=None, is_active=None):
+        
+        nota = get_object_or_404(
+            Nota,
+            id=id
+        )
+
+        nota.nombre_nota = nombre_nota if nombre_nota is not None else nota.nombre_nota
+        nota.observaciones = observaciones if observaciones is not None else nota.observaciones
+        nota.is_active = is_active if is_active is not None else nota.is_active 
+        nota.save(update_fields=["nombre_nota", "observaciones", "is_active"])
+        
+        return nota
