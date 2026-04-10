@@ -155,14 +155,6 @@ class NewPersonalSerializer(serializers.Serializer):
         return f"{cuerpo_formateado}-{dv}"
     
 
-#Cambia el estado de activado/desactivado
-class SetPersonalSerializer(serializers.Serializer):
-    id = serializers.CharField(
-        required=True,
-        allow_blank=False,
-    )
-
-
 #Obtiene todas las persenos activas
 #Necesario para el select del horario
 class PersonalActiveSerializer(serializers.Serializer):
@@ -188,18 +180,7 @@ class GetPersonalSerializer(serializers.Serializer):
         allow_blank=False,
     )
 
-    def validate_admin_id(self, value):
-        if not Empleado.objects.filter(admin_id=value).exists():
-            raise serializers.ValidationError("No tienes eres admin")
-        return value
-    
-    def validate_id(self, value):
-        if not Empleado.objects.filter(id=value).exists():
-            raise serializers.ValidationError("No tienes eres admin")
-        return value 
-    
-
-
+   
 class EditPersonalSerializer(serializers.Serializer):
     nombre_completo = serializers.CharField(
         required=True,
@@ -232,16 +213,4 @@ class EditPersonalSerializer(serializers.Serializer):
         max_length=13,
     )
 	
-    def validate_rut(self, value):
-        if value is not None and value != "":
-            id = self.context.get("id")
-            if Empleado.objects.filter(rut=value).exclude(id=id).exists():
-                raise serializers.ValidationError("Personal ya existe.")
-            return value
     
-    def validate_telefono(self, value):
-        if value is not None and value != "":
-            id = self.context.get("id")
-            if Empleado.objects.filter(telefono=value).exclude(id=id).exists():
-                raise serializers.ValidationError("Personal ya existe.")
-            return value
