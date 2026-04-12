@@ -3,14 +3,12 @@ from django.db import models
 
 # Create your models here.
 class Proveedor(models.Model):
-    
-    admin_id = models.IntegerField(db_index=True)  # dueño / jefe (auth-ms)
+
     nombre_completo = models.CharField(max_length=100)
-    telefono = models.CharField(max_length=20, blank=True, null=True)
-    email = models.EmailField(max_length=20, blank=True, null=True)
-    rut = models.CharField(max_length=12, blank=True, null=True)
-    nombre_empresa = models.CharField(max_length=150, blank=True, null=True)
-    direccion = models.CharField(max_length=255, blank=True, null=True)
+    telefono = models.CharField(max_length=20, blank=False, null=False)
+    email = models.EmailField(max_length=50, blank=False, null=False, default="example@example.cl")
+    rut = models.CharField(max_length=20, blank=False, null=False)
+    nombre_empresa = models.CharField(max_length=150, blank=False, null=False)
     is_active = models.BooleanField(default=True)
     observaciones = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)

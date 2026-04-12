@@ -1,91 +1,185 @@
 from rest_framework.views import APIView
-from django.shortcuts import render
 from django.http.response import JsonResponse
+from rest_framework.response import Response
+from rest_framework import status
 
 #Locales
-from .utils.auth import get_admin_id_from_request
 from .services import*
-from decorators.decorators import logueado
 from .serializers import*
+
+#Swagger
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
+
 
 # Create your views here.
 
 class ObtenerProveedores(APIView):
-    @logueado()
- 
+    @swagger_auto_schema(
+            operation_description="Endpoint Obtener todos los usuarios",
+            responses={
+                200:"Success",
+                400:"Bad Request"},)
     def get(self, request):
-        try:
-            admin_id = get_admin_id_from_request(request)
-        except Exception:
-            return JsonResponse({"estado": "error", "msg": "Ha ocurrido un error"}, status=500)
         
-        serializer = ObtenerProveedoresSerializer(data={"admin_id":admin_id})
-        serializer.is_valid(raise_exception=True)
+        try:
+        
+            proveedoresLists = ProveedoresService.obtener_proveedores_por_admin()
+            datos_json = ObtenerProveedoresSerializer(proveedoresLists, many=True)
 
-        proveedoresLists = ProveedoresService.obtener_proveedores_por_admin(
-            **serializer.validated_data
-        )
+            return Response({"estado":"ok","data": datos_json.data}, status=status.HTTP_200_OK)
 
-        datos_json = ObtenerProveedoresSerializer(proveedoresLists, many=True)
+        except ValueError as e:
+            return Response(
+                {
+                    "estado": "error",
+                    "msg": str(e)
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
-        return JsonResponse({"data": datos_json.data})
 
 
 class ObtenerProveedoresListBox(APIView):
-    @logueado()
- 
+    @swagger_auto_schema(
+            operation_description="Endpoint Obtener todos los usuarios activos",
+            responses={
+                200:"Success",
+                400:"Bad Request"},)
     def get(self, request):
-        try:
-            admin_id = get_admin_id_from_request(request)
-        except Exception:
-            return JsonResponse({"estado": "error", "msg": "Ha ocurrido un error"}, status=500)
-        
-        serializer = ProveedoresListBoxSerializer(data={"admin_id":admin_id})
-        serializer.is_valid(raise_exception=True)
+       
+        try: 
+     
+            proveedoresLists = ProveedoresService.obtener_proveedores_por_admin_cbox()
 
-        proveedoresLists = ProveedoresService.obtener_proveedores_por_admin_cbox(
-            **serializer.validated_data
-        )
+            datos_json = ProveedoresListBoxSerializer(proveedoresLists, many=True)  
 
-        datos_json = ProveedoresListBoxSerializer(proveedoresLists, many=True)
-
-        return JsonResponse({"data": datos_json.data})
+            return JsonResponse({"estado":"ok","data": datos_json.data},
+                                 status=status.HTTP_200_OK)
+        except ValueError as e:
+            return Response(
+                {
+                    "estado": "error",
+                    "msg": str(e)
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
 class AgregarProveedor(APIView):
-    @logueado()
-
+    @swagger_auto_schema(
+            operation_description="Endpoint Registro Proveedor",
+            responses={
+                201:"Success",
+                400:"Bad Request",
+                500:"Internal Server Error"
+            },
+            request_body=openapi.Schema(
+                type=openapi.TYPE_OBJECT,
+                properties={
+                    'nombre_completo': openapi.Schema(type=openapi.TYPE_STRING, description="nombre_completo"),
+                    'nombre_empresa': openapi.Schema(type=openapi.TYPE_STRING, description="nombre_empresa"),
+                    'telefono': openapi.Schema(type=openapi.TYPE_STRING, description="telefono"),
+                    'rut': openapi.Schema(type=openapi.TYPE_STRING, description="rut"),
+                    'observaciones': openapi.Schema(type=openapi.TYPE_STRING, description="observaciones"),
+                    'email': openapi.Schema(type=openapi.TYPE_STRING, description="email"),
+                },
+                required=['nombre_completo', 'telefono', 'email', 'nombre_empresa', 'rut']
+            )
+    )
     def post(self, request):
 
-        try:
-            admin_id = get_admin_id_from_request(request)
-        except Exception:
-            return JsonResponse({"estado": "error", "msg": "Error interno"},status=500)
+        serializer = NewProveedorSerializer( data=request.data)
         
-        serializer = NewProveedorSerializer(context={"admin_id": admin_id}, data=request.data)
-        serializer.is_valid(raise_exception=True)
+        if not serializer.is_valid():
+            return Response(
+                {
+                    "estado": "error",
+                    "msg": "Error de validación",
+                    "errors": serializer.errors
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        try:
+            NewProveedorService.crear_proveedor(
+                **serializer.validated_data
+            )
 
-        NewProveedorService.crear_proveedor(  admin_id=admin_id,
-            **serializer.validated_data
-        )
+            return JsonResponse({"estado": "ok", "msg": "Registro exitoso"},status=201)
+        except ValueError as e:
+            return Response(
+                {
+                    "estado": "error",
+                    "msg": str(e)
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
-        return JsonResponse({"estado": "ok", "msg": "Registro exitoso"},status=201)
-    
+        except ValueError as e:
+            return Response(
+                {
+                    "estado": "error",
+                    "msg": str(e)
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
 class EditarProveedor(APIView):
-    @logueado()
-
+    @swagger_auto_schema(
+            operation_description="Endpoint Registro Proveedor",
+            responses={
+                201:"Success",
+                400:"Bad Request",
+                500:"Internal Server Error"
+            },
+            request_body=openapi.Schema(
+                type=openapi.TYPE_OBJECT,
+                properties={
+                    'nombre_completo': openapi.Schema(type=openapi.TYPE_STRING, description="nombre_completo"),
+                    'nombre_empresa': openapi.Schema(type=openapi.TYPE_STRING, description="nombre_empresa"),
+                    'telefono': openapi.Schema(type=openapi.TYPE_STRING, description="telefono"),
+                    'rut': openapi.Schema(type=openapi.TYPE_STRING, description="rut"),
+                    'observaciones': openapi.Schema(type=openapi.TYPE_STRING, description="observaciones"),
+                    'email': openapi.Schema(type=openapi.TYPE_STRING, description="email"),
+                },
+                required=['nombre_completo', 'telefono', 'email', 'nombre_empresa', 'rut']
+            )
+    )
     def put(self, request, id):
+        proveedor = Proveedor.objects.get(id=id)
+        serializer = EditProveedorSerializer(proveedor, data=request.data)
+       
+        if not serializer.is_valid():
+            return Response(
+                {
+                    "estado": "error",
+                    "msg": "Error de validación",
+                    "errors": serializer.errors
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
         try:
-            admin_id = get_admin_id_from_request(request)
-        except Exception:
-            return JsonResponse({"estado": "error", "msg": "Error interno"},status=500)
+            EditProveedorService.editar_proveedor( 
+                id=id,
+                **serializer.validated_data
+            )
+            return Response({"estado": "ok", "msg": "Edición exitosa"},status=200)
+        
+        except ValueError as e:
+            return Response(
+                {
+                    "estado": "error",
+                    "msg": str(e)
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
-        serializer = EditProveedorSerializer(context={"admin_id": admin_id}, data=request.data)
-        serializer.is_valid(raise_exception=True)
-
-        EditProveedorService.editar_proveedor(  admin_id=admin_id,
-            id=id,
-            **serializer.validated_data
-        )
-
-        return JsonResponse({"estado": "ok", "msg": "Edición exitosa"},status=200)
+        except ValueError as e:
+            return Response(
+                {
+                    "estado": "error",
+                    "msg": str(e)
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )

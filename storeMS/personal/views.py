@@ -93,7 +93,7 @@ class RegistroEmpleado(APIView):
                     'pago_diario': openapi.Schema(type=openapi.TYPE_INTEGER, description="pago_diario"),
                     'rut': openapi.Schema(type=openapi.TYPE_STRING, description="rut")
                 },
-                required=['nombre_completo', 'telefono', 'pago_diario', 'rut']
+                required=['nombre_completo', 'telefono', 'rut']
             )
     )
     def post(self, request):
