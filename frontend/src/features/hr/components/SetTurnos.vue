@@ -20,7 +20,7 @@ const { sendData } = useAsignarPersonal()
 const emit = defineEmits(['horarioData', 'addPersonal', 'deletePersonal', 'persona-data'])
 
 const { trigger } = useToast()
-const horarioID = computed(() => props.items.horario.id)
+const horarioID = computed(() => props.items.id)
 
 const onSelectEmpleado = async (dia, empleadoID) => {
   let personal = empleadoID
@@ -45,8 +45,6 @@ const onSelectEmpleado = async (dia, empleadoID) => {
 const onEliminarEmpleado = async (dia, personal) => {
   let id = horarioID.value
 
-  console.log(id, personal, dia)
-
   try {
     await eliminarPersonal(id, {
       dia,
@@ -64,7 +62,7 @@ const onEliminarEmpleado = async (dia, personal) => {
 <template>
   <div class="max-h-96 overflow-y-auto rounded-xl shadow-sm border border-slate-200">
     <div>
-      <h5 class="text-center py-4 font-bold">{{ items.horario?.nombre? items.horario?.nombre: "Por favor genere un horario" }}</h5>
+      <h5 class="text-center py-4 font-bold">{{ items.nombre? items.nombre: "Por favor genere un horario" }}</h5>
     </div>
     <table
       class="min-w-full border-collapse text-sm overflow-y-auto bg-white rounded-xl shadow-sm border border-slate-200"
@@ -79,7 +77,7 @@ const onEliminarEmpleado = async (dia, personal) => {
 
       <tbody>
         <tr
-          v-for="dia in items?.horario?.dias"
+          v-for="dia in items?.dias"
           :key="dia.id"
           class="border-t hover:bg-slate-50 transition"
         >
@@ -97,7 +95,7 @@ const onEliminarEmpleado = async (dia, personal) => {
               <option value="Seleccionar">Seleccionar</option>
               <option
                 v-for="emp in personallist.filter((e) => e.is_active)"
-                :key="emp.id"
+                :key="emp.id" 
                 :value="emp.id"
               >
                 {{ emp.nombre_completo }}
@@ -114,12 +112,12 @@ const onEliminarEmpleado = async (dia, personal) => {
                 class="flex items-center gap-2 rounded-full bg-slate-200 px-3 py-1 text-sm"
               >
                 <span class="text-slate-700">
-                  {{ asig.empleado.nombre_completo }}
+                  {{ asig.persona.nombre_completo }} 
                 </span>
               
                 <button
                   class="text-red-600 hover:text-red-800 font-bold transition"
-                  @click="onEliminarEmpleado(dia.id, asig?.empleado?.id)"
+                  @click="onEliminarEmpleado(dia.id, asig?.persona.id)"
                 >
                   ×
                 </button>

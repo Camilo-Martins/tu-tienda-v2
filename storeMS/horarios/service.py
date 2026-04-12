@@ -1,26 +1,19 @@
 from django.shortcuts import get_object_or_404
-from django.core.exceptions import ValidationError
-from datetime import timedelta, date
-from django.utils.formats import date_format
-from django.core.exceptions import ValidationError
 from django.db import transaction
-from ..models import*
-from helpers.asignaciones import asignar_empleado_a_dia
-from ..utils import horario_utils
-
-def obtener_horarios_por_admin(admin_id):
-    return HorarioSemanal.objects.filter(admin_id=admin_id).order_by('-id')
+from .models import*
+from personal.models import Persona
+from .utils import horario_utils
 
 
-
+#No borrar
 class CreateHorarioService:
     @staticmethod
     @transaction.atomic
-    def crear_horario(*, admin_id):
+    def crear_horario():
 
         fecha_inicio, fecha_fin, nombre = horario_utils.calcular_semana_actual()
      
-        horario_old = HorarioSemanal.objects.filter(admin_id=admin_id).order_by('-id').first()
+        horario_old = HorarioSemanal.objects.filter().order_by('-id').first()
         
         if horario_old:
             horario_old.is_active = False
@@ -30,7 +23,6 @@ class CreateHorarioService:
                     nombre=nombre,
                     fecha_inicio=fecha_inicio,
                     fecha_fin=fecha_fin,
-                    admin_id=admin_id
                 )
 
         for dia in range(1,8):
@@ -44,90 +36,70 @@ class CreateHorarioService:
 class GetHorarioService:
     @staticmethod
     @transaction.atomic
-    def obtener_horario(*, admin_id):
+    def obtener_horario():
 
-        horario = HorarioSemanal.objects.filter(admin_id=admin_id).order_by('-id').first()
+        horario = HorarioSemanal.objects.order_by('-id').first()
         dias = DiaHorario.objects.filter(horario=horario)
 
-        return horario, dias
-
-
+        return horario
 
 
 class AsignarPersonalService:      
     @staticmethod
     @transaction.atomic  
-    def asignar_semana(admin_id, id, dia, personal):
+    def asignar_semana( id, dia, personal):
       
         horario = get_object_or_404(
             HorarioSemanal,
             id=id
         )
 
-
-        empleado = get_object_or_404(
-            Empleado,
+        persona = get_object_or_404(
+            Persona,
             id=personal,
-            admin_id=admin_id
+         
         )
 
-    
         dia = get_object_or_404(
             DiaHorario,
             horario=horario,
             id=int(dia)
         )
 
-     
         asignacion = AsignacionDia.objects.create(
             dia=dia,
-            empleado=empleado
+            persona=persona
          
         )
 
         return asignacion
 
-
 class DesasginarPersonalService:      
     @staticmethod
     @transaction.atomic  
-    def desasginar_semana(admin_id, id, dia, personal):
+    def desasginar_semana( id, dia, personal):
       
         horario = get_object_or_404(
             HorarioSemanal,
             id=id
         )
 
-
-        empleado = get_object_or_404(
-            Empleado,
+        persona = get_object_or_404(
+            Persona,
             id=personal,
-            admin_id=admin_id
         )
 
-    
         dia = get_object_or_404(
             DiaHorario,
             horario=horario,
             id=int(dia)
         )
 
-     
         asignacion = AsignacionDia.objects.filter(
             dia=dia,
-            empleado=empleado
+            persona=persona
         ).delete()
 
         return asignacion
 
 
-def desactivar_horario(admin_id, id):
-
-    horario = get_object_or_404(
-        HorarioSemanal,
-        admin_id=admin_id,
-        id=id
-    )
-
-    horario.is_active=True
-    horario.save()

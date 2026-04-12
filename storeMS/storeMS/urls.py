@@ -50,6 +50,8 @@ urlpatterns = [
     path('api/v1/proveedores/', include('proveedores.urls')), 
     path('api/v1/productos/', include('productos.urls')),
     path('api/v1/personal/', include('personal.urls')),
+    path('api/v1/horarios/', include('horarios.urls')),
+
 
      #rutas swagger
     path('documentacion<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),

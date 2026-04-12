@@ -51,7 +51,7 @@ const emit = defineEmits(['toggle-status', 'select', 'persona-data'])
 
           <td class="px-4 py-3 text-center">
             <a
-              :href="`https://wa.me/${persona.telefono.trim()}`"
+              :href="`https://wa.me/+569${persona.telefono.trim()}`"
               target="_blank"
               rel="noopener noreferrer"
               class="text-green-600 hover:underline font-medium"

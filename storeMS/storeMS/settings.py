@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'notas',
     'proveedores',
     'productos',
-    'personal'
+    'personal',
+    'horarios'
     
 ]
 

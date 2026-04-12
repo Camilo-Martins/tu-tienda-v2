@@ -40,7 +40,8 @@ const toPersona = async (id) => {
 
 const fetchHorario = async () => {
   await getHorario()
-  horarioData.value = dataHorario.value
+  horarioData.value = dataHorario.value.data
+  console.log(horarioData.value)
 }
 </script>
 

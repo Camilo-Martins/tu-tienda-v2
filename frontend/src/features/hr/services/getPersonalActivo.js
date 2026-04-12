@@ -1,11 +1,9 @@
 // services/registerService.ts
 export async function obtenerPersonalActivo() {
-  const token = localStorage.getItem('user_token')
-  const response = await fetch(`${import.meta.env.VITE_API_HR_URL}personal/personal-activo`, {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}personal/obtener/lista`, {
     method: 'GET',
     headers: {
       'content-type': 'application/json',
-      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(),
   })

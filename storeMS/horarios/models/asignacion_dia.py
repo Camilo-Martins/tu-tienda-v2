@@ -1,6 +1,6 @@
 from django.db import models
 from .dia_horario import DiaHorario
-from personal.models import Empleado
+from personal.models import Persona
 
 class AsignacionDia(models.Model):
     dia = models.ForeignKey(
@@ -9,10 +9,10 @@ class AsignacionDia(models.Model):
         related_name="asignaciones"
     )
 
-    empleado = models.ForeignKey(
-        Empleado,
+    persona = models.ForeignKey(
+        Persona,
         on_delete=models.CASCADE
     )
 
     class Meta:
-        unique_together = ("dia", "empleado")
+        unique_together = ("dia", "persona")

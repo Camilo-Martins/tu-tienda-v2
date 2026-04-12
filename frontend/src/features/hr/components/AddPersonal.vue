@@ -30,15 +30,13 @@ const submit = async (values, { resetForm }) => {
       nombre_completo: values.nombre_completo,
       telefono: values.telefono,
       rut: values.rut,
-      rol: values.rol,
       pago_diario: values.pago_diario,
-      medio_pago: values.medio_pago,
     })
 
     resetForm()
     emit('created')
   } catch (error) {
-    trigger("Error al agregar pesonal")
+    trigger(error)
   }
 }
 </script>

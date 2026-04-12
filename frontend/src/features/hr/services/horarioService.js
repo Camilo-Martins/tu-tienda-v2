@@ -1,11 +1,9 @@
 // services/registerService.ts
 export async function addHorarioService(body) {
-  const token = localStorage.getItem('user_token')
-  const response = await fetch(`${import.meta.env.VITE_API_HR_URL}horario/crear`, {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}horarios/crear`, {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
-      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(body),
   })
@@ -23,12 +21,10 @@ export async function addHorarioService(body) {
 }
 
 export async function getHorarioService(body) {
-  const token = localStorage.getItem('user_token')
-  const response = await fetch(`${import.meta.env.VITE_API_HR_URL}horario/obtener-horario`, {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}horarios/obtener-horario`, {
     method: 'GET',
     headers: {
       'content-type': 'application/json',
-      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(body),
   })
@@ -46,14 +42,12 @@ export async function getHorarioService(body) {
 }
 
 export async function asignarPersonalService(id, body) {
-  const token = localStorage.getItem('user_token')
   const response = await fetch(
-    `${import.meta.env.VITE_API_HR_URL}horario/asignacion-personal/${id}`,
+    `${import.meta.env.VITE_API_URL}horarios/asignacion-personal/${id}`,
     {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
-        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(body),
     },
@@ -72,14 +66,12 @@ export async function asignarPersonalService(id, body) {
 }
 
 export async function desasignarPersonalService(id, body) {
-  const token = localStorage.getItem('user_token')
   const response = await fetch(
-    `${import.meta.env.VITE_API_HR_URL}horario/eliminacion-personal/${id}`,
+    `${import.meta.env.VITE_API_URL}horarios/eliminacion-personal/${id}`,
     {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
-        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(body),
     },
