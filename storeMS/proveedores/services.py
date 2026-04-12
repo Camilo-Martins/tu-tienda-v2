@@ -38,7 +38,7 @@ class NewProveedorService:
 class EditProveedorService:
     @staticmethod
     @transaction.atomic
-    def editar_proveedor(*, id, nombre_completo=None, telefono, email=None, rut=None, nombre_empresa=None, observaciones=None, is_active=None):
+    def editar_proveedor(*, id, nombre_completo, telefono, email=None, rut=None, nombre_empresa=None, observaciones=None, is_active=None):
         
         proveedor = get_object_or_404(
             Proveedor,

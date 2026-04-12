@@ -68,7 +68,7 @@ class NewProveedorSerializer(serializers.Serializer):
     rut = serializers.CharField(
         required=False,     
         allow_blank=True,
-        max_length=13,
+        max_length=12,
        )
     
     nombre_empresa = serializers.CharField(

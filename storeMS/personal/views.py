@@ -1,15 +1,15 @@
 from rest_framework.views import APIView
-from django.http.response import JsonResponse
-from http import HTTPStatus
 from rest_framework.response import Response
 from rest_framework import status
-#Swagger
-from drf_yasg.utils import swagger_auto_schema
-from drf_yasg import openapi
 
 #Locales
 from .service import*
 from .serializers import*
+
+#Swagger
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
+
 
 # Create your views here.
 
@@ -18,72 +18,76 @@ class ObtenerEmpleados(APIView):
             operation_description="Endpoint Obtener Empleados",
             responses={
                 200:"Success",
-                400:"Bad Request"},)
-    def get(self):
+                400:"Bad Request",
+                500:"Internal Server Error"},)
+    def get(self, request):
 
-        serializer = EmpleadoSerializer()
-        serializer.is_valid(raise_exception=True)
+        try: 
+            personalList = PersonalListService.obtener_empleados_por_admin()
 
-        personalList = PersonalListService.obtener_empleados_por_admin(
-            **serializer.validated_data
-        )
+            datos_json = EmpleadoSerializer(personalList, many=True)
 
-        datos_json = EmpleadoSerializer(personalList, many=True)
+            return Response({"estado":"ok", "data": datos_json.data}, status=status.HTTP_200_OK)
 
-        return Response({"data": datos_json.data})
-
+        except ValueError as e:
+            return Response(
+                {
+                    "estado": "error",
+                    "msg": str(e)
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        except ValueError as e:
+            return Response(
+                {
+                    "estado": "error",
+                    "msg": str(e)
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
 class ObtenerEmpleadosActivos(APIView):
     @swagger_auto_schema(
-            operation_description="Endpoint Obtener Empleados",
+            operation_description="Endpoint Obtener Personal activo para la asignación de horario",
             responses={
                 200:"Success",
-                400:"Bad Request"},)
-    def get(self):
+                400:"Bad Request",
+                500:"Internal Server Error"},)
+    def get(self, request):
 
-        serializer = PersonalActiveSerializer()
-        serializer.is_valid(raise_exception=True)
-
-        personalList = PersonalActiveListService.obtener_empleados_por_admin(
-            **serializer.validated_data
-        )
-
-        datos_json = PersonalActiveSerializer(personalList, many=True)
-
-        return Response({"data": datos_json.data})
-
-
-class ObtenerEmpleado(APIView):
-    @swagger_auto_schema(
-            operation_description="Endpoint Obtener Empleado",
-            responses={
-                200:"Success",
-                400:"Bad Request"})
-    def get(self,id):
-
-        serializer = GetPersonalSerializer(data={"id":id})
-        serializer.is_valid(raise_exception=True)
-
-        empleado, asistencias, pagos = PersonalService.obtener_empleado(
-            id=id
-        )
-
-        data = {
-            "empleado": EmpleadoSerializer(empleado).data,
-            "asistencias": AsistenciaSerializer(asistencias, many=True).data,
-            "pagos": PagoSerializer(pagos, many=True).data,
-        }
-        
-        return JsonResponse(data)
-      
        
-        
+        try:
+            personalList = PersonalActiveListService.obtener_empleados_por_admin()
+            datos_json = PersonalActiveSerializer(personalList, many=True)
+            return Response({"estado":"ok","data": datos_json.data},status=status.HTTP_200_OK)
+
+        except ValueError as e:
+            return Response(
+                {
+                    "estado": "error",
+                    "msg": str(e)
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        except ValueError as e:
+            return Response(
+                {
+                    "estado": "error",
+                    "msg": str(e)
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+
 class RegistroEmpleado(APIView):
     @swagger_auto_schema(
             operation_description="Endpoint Registro Empleado",
             responses={
-                200:"Success",
-                400:"Bad Request"
+                201:"Success",
+                400:"Bad Request",
+                500:"Internal Server Error"
             },
             request_body=openapi.Schema(
                 type=openapi.TYPE_OBJECT,
@@ -93,7 +97,7 @@ class RegistroEmpleado(APIView):
                     'pago_diario': openapi.Schema(type=openapi.TYPE_INTEGER, description="pago_diario"),
                     'rut': openapi.Schema(type=openapi.TYPE_STRING, description="rut")
                 },
-                required=['nombre_completo', 'telefono', 'rut']
+                required=['nombre_completo', 'telefono']
             )
     )
     def post(self, request):
@@ -140,111 +144,70 @@ class RegistroEmpleado(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
-
-class DesactivarEmpleado(APIView):
-    @logueado()
-    @swagger_auto_schema(
-            operation_description="Endpoint Desactivar Empleado",
-            responses={
-                200:"Success",
-                400:"Bad Request"
-            },
-    )
-    def patch(self, request, id):
-        
-        try:
-            admin_id = get_admin_id_from_request(request)
-        except Exception:
-            return JsonResponse({"estado": "error", "msg": "Error interno"},status=500)
-       
-        serializer = SetPersonalSerializer(data={"admin_id":admin_id, "id":id})
-        serializer.is_valid(raise_exception=True)
-    
-        SetPerfilService.desactivar_empleado(
-            **serializer.validated_data
-        )
-
-        return JsonResponse( {"estado": "ok", "msg": "Estado actualizado"},status=200)
-
-        
+ 
 class EditarEmpleado(APIView):
-    @logueado()
     @swagger_auto_schema(
-            operation_description="Endpoint Editar Empleado",
+            operation_description="Endpoint Editar Personal",
             responses={
                 200:"Success",
-                400:"Bad Request"
+                400:"Bad Request",
+                500:"Internal Server Error"
             },
             request_body=openapi.Schema(
                 type=openapi.TYPE_OBJECT,
                 properties={
                     'nombre_completo': openapi.Schema(type=openapi.TYPE_STRING, description="nombre_completo"),
                     'telefono': openapi.Schema(type=openapi.TYPE_STRING, description="telefono"),
-                    'rol': openapi.Schema(type=openapi.TYPE_STRING, description="rol"),
+
                     'pago_diario': openapi.Schema(type=openapi.TYPE_STRING, description="pago_diario"),
                     'rut': openapi.Schema(type=openapi.TYPE_STRING, description="rut")
                 },
-                required=['nombre_completo', 'telefono', 'rol', 'pago_diario', 'rut']
+                required=['nombre_completo', 'telefono']
             )
     )
     def put(self, request, id):
-        try:
-            admin_id = get_admin_id_from_request(request)
-        except Exception:
-            return JsonResponse({"estado": "error", "msg": "Error interno"},status=HTTPStatus.INTERNAL_SERVER_ERROR)
-       
+        persona = Persona.objects.get(id=id)
 
         serializer = EditPersonalSerializer(
-            data=request.data,
-            context={
-                "admin_id": admin_id,
-                "id": id
-            }
-        )
-        serializer.is_valid(raise_exception=True)
-        
-        
-        EditPersonalService.editar_empleado(
-            admin_id=admin_id,
-            id=id,
-            **serializer.validated_data
+            persona,
+            data=request.data
         )
 
-        return JsonResponse( {"estado": "ok", "msg": "Estado actualizado"},status=200)
-      
+        if not serializer.is_valid():
+            return Response(
+                {
+                    "estado": "error",
+                    "msg": "Error de validación",
+                    "errors": serializer.errors
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
         
-
-class AsistenciaEmpleado(APIView):
-    @logueado()
-    def post(self, request, id):
-
-        admin_id = get_admin_id_from_request(request)
-      
         try:
-            asistencia_empleado(admin_id,id, data=request.data)
+            EditPersonalService.editar_empleado(
+            
+                id=id,
+                **serializer.validated_data
+            )
 
-            return JsonResponse(
-                {"estado": "ok", "msg": "Registro exitoso"}, status=201)
+            return Response( {"estado": "ok", "msg": "Estado actualizado"},status=200)
+      
+        except ValueError as e:
+            return Response(
+                {
+                    "estado": "error",
+                    "msg": str(e)
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
-        except Exception:
-              return JsonResponse({"estado": "error", "msg": "No fue posible registrar asistencia"}, status=400)
+        except ValueError as e:
+            return Response(
+                {
+                    "estado": "error",
+                    "msg": str(e)
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
         
-        except Exception:
-            return JsonResponse({"estado": "error", "msg": "Error interno"},status=500)
-
-
-class PagoEmpleado(APIView):
-    @logueado()
-    def post(self, request, id):
-
-        admin_id = get_admin_id_from_request(request)
-
-        try:
-            pago_empleado(admin_id, id, data=request.data)
-
-            return JsonResponse({"estado":"ok", "msg":"Pago realizado"}, status=HTTPStatus.OK)
-        except Exception:
-              return JsonResponse({"estado": "error", "msg": "No fue posible realizar el pago"}, status=400)
-        
-        except Exception:
-            return JsonResponse({"estado": "error", "msg": "Error interno"},status=500)
