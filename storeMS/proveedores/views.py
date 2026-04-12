@@ -27,7 +27,7 @@ class ObtenerProveedores(APIView):
             proveedoresLists = ProveedoresService.obtener_proveedores_por_admin()
             datos_json = ObtenerProveedoresSerializer(proveedoresLists, many=True)
 
-            return Response({"estado":"ok","data": datos_json.data}, status=status.HTTP_200_OK)
+            return Response({"estado":"ok","msg": datos_json.data}, status=status.HTTP_200_OK)
 
         except ValueError as e:
             return Response(
@@ -54,7 +54,7 @@ class ObtenerProveedoresListBox(APIView):
 
             datos_json = ProveedoresListBoxSerializer(proveedoresLists, many=True)  
 
-            return JsonResponse({"estado":"ok","data": datos_json.data},
+            return JsonResponse({"estado":"ok","msg": datos_json.data},
                                  status=status.HTTP_200_OK)
         except ValueError as e:
             return Response(

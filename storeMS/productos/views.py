@@ -1,81 +1,165 @@
 from rest_framework.views import APIView
-from django.shortcuts import render
 from django.http.response import JsonResponse
+from rest_framework.response import Response
+from rest_framework import status
 
 #Locales
-from .utils.auth import get_admin_id_from_request
 from .services import*
-from decorators.decorators import logueado
 from .serializers import*
-from django.shortcuts import render
+
+#Swagger
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
+
+
 
 # Create your views here.
 class ObtenerProductos(APIView):
-
-    @logueado()
+    @swagger_auto_schema(
+            operation_description="Endpoint Obtener todos productos",
+            responses={
+                200:"Success",
+                400:"Bad Request"},)
     def get(self, request):
+      
         try:
-            admin_id = get_admin_id_from_request(request)
-        except Exception:
-            return JsonResponse({"estado": "error", "msg": "Ha ocurrido un error"}, status=500)
+            proveedor = request.query_params.get('proveedor')
+            categoria = request.query_params.get('categoria')
+
+            productosList = ProductoService.get_productos(
+            
+                proveedor=proveedor,
+                categoria=categoria
+            )
+
+            datos_json = ProductoSerializer(productosList, many=True)
+
+            return Response({"estado":"ok", "msg": datos_json.data}, status=status.HTTP_200_OK)
         
-        proveedor = request.query_params.get('proveedor')
-        categoria = request.query_params.get('categoria')
-
-        serializer = ProductoSerializer(data={"admin_id":admin_id})
-        serializer.is_valid(raise_exception=True)
-        
-        productosList = ProductoService.get_productos(
-            **serializer.validated_data,
-            proveedor=proveedor,
-            categoria=categoria
-        )
-
-        datos_json = ProductoSerializer(productosList, many=True)
-
-        return JsonResponse({"data": datos_json.data})
+        except ValueError as e:
+            return Response(
+                {
+                    "estado": "error",
+                    "msg": str(e)
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
 class AgregarProducto(APIView):
-    @logueado()
-
+  
+    @swagger_auto_schema(
+            operation_description="Endpoint Registro Producto",
+            responses={
+                201:"Success",
+                400:"Bad Request",
+                500:"Internal Server Error"
+            },
+            request_body=openapi.Schema(
+                type=openapi.TYPE_OBJECT,
+                properties={
+                    'nombre_producto': openapi.Schema(type=openapi.TYPE_STRING, description="nombre_producto"),
+                    'proveedor': openapi.Schema(type=openapi.TYPE_STRING, description="proveedor"),
+                    'descripcion': openapi.Schema(type=openapi.TYPE_STRING, description="descripcion"),
+                    'precio': openapi.Schema(type=openapi.TYPE_STRING, description="precio"),
+                    'stock_actual': openapi.Schema(type=openapi.TYPE_STRING, description="stock_actual"),
+                    'categoria': openapi.Schema(type=openapi.TYPE_STRING, description="categoria"),
+                },
+                required=['nombre_producto']
+            )
+    )
     def post(self, request):
+        serializer = NewProductoSerializer(data=request.data)
+
+        if not serializer.is_valid():
+            return Response(
+                {
+                    "estado": "error",
+                    "msg": "Error de validación",
+                    "errors": serializer.errors
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
         try:
-            admin_id = get_admin_id_from_request(request)
-        except Exception:
-            return JsonResponse({"estado": "error", "msg": "Ha ocurrido un error"}, status=500)
+            NewProductoService.crear_producto(
+                **serializer.validated_data
+            
+            )
+            return JsonResponse({"estado":"ok","msg": "Producto agregado"}, status=201)
+        
+        except ValueError as e:
+            return Response(
+                {
+                    "estado": "error",
+                    "msg": str(e)
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
-        serializer = NewProductoSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
+        except ValueError as e:
+            return Response(
+                {
+                    "estado": "error",
+                    "msg": str(e)
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
-        producto = NewProductoService.crear_producto(
-            **serializer.validated_data,
-            admin_id=admin_id
-        )
-
-        datos_json = ProductoSerializer(producto)
-
-        return JsonResponse({"data": datos_json.data})
-    
 class EditarProducto(APIView):
-    @logueado()
-
+    @swagger_auto_schema(
+            operation_description="Endpoint Editar Producto",
+            responses={
+                201:"Success",
+                400:"Bad Request",
+                500:"Internal Server Error"
+            },
+            request_body=openapi.Schema(
+                type=openapi.TYPE_OBJECT,
+                properties={
+                    'nombre_producto': openapi.Schema(type=openapi.TYPE_STRING, description="nombre_producto"),
+                    'proveedor': openapi.Schema(type=openapi.TYPE_STRING, description="proveedor"),
+                    'descripcion': openapi.Schema(type=openapi.TYPE_STRING, description="descripcion"),
+                    'precio': openapi.Schema(type=openapi.TYPE_STRING, description="precio"),
+                    'stock_actual': openapi.Schema(type=openapi.TYPE_STRING, description="stock_actual"),
+                    'categoria': openapi.Schema(type=openapi.TYPE_STRING, description="categoria"),
+                },
+                required=['nombre_producto', 'proveedor']
+            )
+    )
     def put(self, request, id):
 
-        try:
-            admin_id = get_admin_id_from_request(request)
-        except Exception:
-            return JsonResponse({"estado": "error", "msg": "Ha ocurrido un error"}, status=500)
+        serializer = EditarProductoSerializer( data=request.data)
+        if not serializer.is_valid():
+            return Response(
+                {
+                    "estado": "error",
+                    "msg": "Error de validación",
+                    "errors": serializer.errors
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
-        serializer = EditarProductoSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-
-        producto = EditProductoService.editar_producto(
+        try: 
+            EditProductoService.editar_producto(
             **serializer.validated_data,
-            admin_id=admin_id,
-            id=id
-        )
+            id=id)
 
-        datos_json = EditarProductoSerializer(producto)
+            return JsonResponse({"estado":"ok", "msg": "Producto editado correctamente"}, status=200)
 
-        return JsonResponse({"data": datos_json.data})
+        except ValueError as e:
+            return Response(
+                {
+                    "estado": "error",
+                    "msg": str(e)
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        except ValueError as e:
+            return Response(
+                {
+                    "estado": "error",
+                    "msg": str(e)
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
