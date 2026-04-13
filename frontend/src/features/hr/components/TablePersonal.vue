@@ -28,7 +28,7 @@ const emit = defineEmits(['toggle-status', 'select', 'persona-data'])
           <th class="px-4 py-3 text-center">Pago</th>
           <th class="px-4 py-3 text-center">Estado</th>
           <th class="px-4 py-3 text-center">Contacto</th>
-          <th class="px-4 py-3 text-center">Acción</th>
+      
         </tr>
       </thead>
       <tbody>
@@ -57,15 +57,6 @@ const emit = defineEmits(['toggle-status', 'select', 'persona-data'])
               class="text-green-600 hover:underline font-medium"
             >
               ENVIAR WSP
-            </a>
-          </td>
-          <td class="px-4 py-3 text-center">
-            <a
-              @click="emit('personta-data', persona.id)"
-              :href="`/panel/persona/${persona.id}`"
-              class="text-blue-600 hover:underline font-medium"
-            >
-              Editar
             </a>
           </td>
         </tr>
