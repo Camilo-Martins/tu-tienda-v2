@@ -10,9 +10,7 @@ let proveedoreslist = ref([])
 
 const fetchProveedores = async () => {
   await sendData()
-
   proveedoreslist.value = data.value.data
-  console.log(proveedoreslist.value)
 }
 
 onMounted(() => {

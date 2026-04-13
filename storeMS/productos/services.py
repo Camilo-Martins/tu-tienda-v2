@@ -30,7 +30,7 @@ class NewProductoService:
             descripcion=descripcion,
             precio=precio,
             categoria=categoria,
-            proveedor_id=proveedor_id,
+            proveedor_id=1,
             stock_actual=stock_actual,
             is_active=True,
         
@@ -48,16 +48,16 @@ class EditProductoService:
         
         producto = get_object_or_404(
             Producto,
-         
             id=id,
         )
 
         producto.nombre_producto = nombre_producto if nombre_producto is not None else producto.nombre_producto
         producto.descripcion = descripcion if descripcion is not None else producto.descripcion
         producto.precio = precio if precio is not None else producto.precio
+        producto.proveedor_id = proveedor_id if proveedor_id is not None else proveedor_id
         producto.categoria = categoria if categoria is not None else producto.categoria
         producto.stock_actual = stock_actual if stock_actual is not None else producto.stock_actual
         producto.is_active = is_active if is_active is not None else producto.is_active 
-        producto.save(update_fields=["nombre_producto", "descripcion", "precio", "categoria",  "stock_actual",
+        producto.save(update_fields=["nombre_producto", "descripcion", "precio", "categoria",  "stock_actual", "proveedor_id",
                                       "is_active"])
         return producto

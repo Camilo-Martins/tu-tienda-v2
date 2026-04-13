@@ -16,7 +16,6 @@ const { sendData: sendProducto } = useAddProducto()
 const emit = defineEmits(['addProduct'])
 
 const submit = async (values, { resetForm }) => {
-    console.log(values)
     try {
         await sendProducto({
             nombre_producto: values.nombre_producto,
@@ -30,7 +29,6 @@ const submit = async (values, { resetForm }) => {
         emit('addProduct')
         resetForm()
     } catch (error) {
-        console.log(error)
         trigger('Ingrese nombre para agregar el producto', 'error')
     }
 }

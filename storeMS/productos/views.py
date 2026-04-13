@@ -1,5 +1,4 @@
 from rest_framework.views import APIView
-from django.http.response import JsonResponse
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -34,7 +33,7 @@ class ObtenerProductos(APIView):
 
             datos_json = ProductoSerializer(productosList, many=True)
 
-            return Response({"estado":"ok", "msg": datos_json.data}, status=status.HTTP_200_OK)
+            return Response({"estado":"ok", "data": datos_json.data}, status=status.HTTP_200_OK)
         
         except ValueError as e:
             return Response(
@@ -85,7 +84,7 @@ class AgregarProducto(APIView):
                 **serializer.validated_data
             
             )
-            return JsonResponse({"estado":"ok","msg": "Producto agregado"}, status=201)
+            return Response({"estado":"ok","data": "Producto agregado"}, status=201)
         
         except ValueError as e:
             return Response(
@@ -144,7 +143,7 @@ class EditarProducto(APIView):
             **serializer.validated_data,
             id=id)
 
-            return JsonResponse({"estado":"ok", "msg": "Producto editado correctamente"}, status=200)
+            return Response({"estado":"ok", "data": "Producto editado correctamente"}, status=200)
 
         except ValueError as e:
             return Response(

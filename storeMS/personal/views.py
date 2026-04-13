@@ -191,7 +191,7 @@ class EditarEmpleado(APIView):
                 **serializer.validated_data
             )
 
-            return Response( {"estado": "ok", "msg": "Estado actualizado"},status=200)
+            return Response( {"estado": "ok", "data": "Estado actualizado"},status=200)
       
         except ValueError as e:
             return Response(

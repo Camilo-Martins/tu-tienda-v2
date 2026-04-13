@@ -41,7 +41,7 @@ const toPersona = async (id) => {
 const fetchHorario = async () => {
   await getHorario()
   horarioData.value = dataHorario.value.data
-  console.log(horarioData.value)
+
 }
 </script>
 
@@ -59,7 +59,7 @@ const fetchHorario = async () => {
 
     <div class="grid grid-cols-12 gap-6">
       <div class="col-span-6">
-        <TablePersonal :items="personalList" :selected-id="selectedId" @persona-data="toPersona"
+        <TablePersonal :items="personalList" :selected-id="selectedId" @persona-data="toPersona" @updated-personal="fetchEmployees"
           @toggle-status="toggleEmployeeStatus" />
       </div>
       <div class="col-span-6">

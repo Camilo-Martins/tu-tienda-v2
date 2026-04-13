@@ -1,6 +1,5 @@
 import { ref, readonly } from 'vue'
-import {  getPersonaService } from '../services/getPersonaService'
-
+import { getPersonaService } from '../services/getPersonaService'
 
 export function useGetPersona() {
   const data = ref(null)
@@ -11,22 +10,18 @@ export function useGetPersona() {
   const sendData = async (id) => {
     loading.value = true
     error.value = null
-      success.value = false
+    success.value = false
 
     try {
-        data.value = await getPersonaService(id)
-        success.value = true
-        console.log(data.value)
-      
+      data.value = await getPersonaService(id)
+      success.value = true
     } catch (e) {
-          if (e?.data?.message) {
-              window.location.href = `/panel/personal`;
+      if (e?.data?.message) {
+        window.location.href = `/panel/personal`
         error.value = e.data.message
-        
-      } else{
-          window.location.href = `/panel/personal`;
-         error.value = 'Hubo un problema al encontrar perfil'
-         
+      } else {
+        window.location.href = `/panel/personal`
+        error.value = 'Hubo un problema al encontrar perfil'
       }
       throw e
     } finally {
@@ -39,6 +34,6 @@ export function useGetPersona() {
     data: readonly(data),
     loading: readonly(loading),
     error: readonly(error),
-      success: readonly(success),
+    success: readonly(success),
   }
 }

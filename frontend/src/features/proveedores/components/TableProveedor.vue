@@ -19,6 +19,7 @@ const editing = ref({
 const emit = defineEmits(['updatedProveedor'])
 const { trigger } = useToast()
 const { sendData } = useEditProveedor()
+
 const startEdit = (proveedor, field) => {
   editing.value.id = proveedor.id
   editing.value.field = field
@@ -55,7 +56,7 @@ const saveEdit = async (proveedor) => {
     emit('updatedProveedor')
     proveedor[field] = value
   } catch (error) {
-    trigger(error.data.rut)
+    trigger("Verifica que el formato sea correcto o que el campo no esté vacío")
   } finally {
     cancelEdit()
   }
@@ -77,7 +78,6 @@ const toggleEstado = async (proveedor) => {
     proveedor.is_active = nuevoEstado
     emit('updatedProveedor')
   } catch (error) {
-    console.log(error)
     trigger("Error al actualizar proveedor")
    }
 }
@@ -92,6 +92,7 @@ const toggleEstado = async (proveedor) => {
           <th class="px-4 py-3 text-left" colspan="1">Nombre</th>
           <th class="px-4 py-3 text-center" colspan="1">Rut</th>
           <th class="px-4 py-3 text-center" colspan="1">Telefono</th>
+          <th class="px-4 py-3 text-center" colspan="1">Contactar</th>
           <th class="px-4 py-3 text-center" colspan="1">Email</th>
           <th class="px-4 py-3 text-center" colspan="1">Nombre Empresa</th>
           <th class="px-4 py-3 text-center" colspan="6">Observaciones</th>
@@ -136,8 +137,18 @@ const toggleEstado = async (proveedor) => {
 
               
             <span v-else class="block w-full cursor-pointer" @click="startEdit(proveedor, 'telefono')" >
-              +{{ proveedor.telefono ? proveedor.telefono : 'No definido' }}
+              {{ proveedor.telefono ? proveedor.telefono : 'No definido' }}
             </span>
+          </td>
+          <td class="px-4 py-3 text-center truncate max-w-xs" colspan="1">
+             <a
+              :href="`https://wa.me/+569${proveedor.telefono.trim()}`"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-green-600 hover:underline font-medium"
+            >
+              WSP
+            </a>
           </td>
 
           <!-- Email -->

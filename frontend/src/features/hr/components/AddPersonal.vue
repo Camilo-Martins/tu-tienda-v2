@@ -14,7 +14,6 @@ const emit = defineEmits(['created', 'generated'])
 const { sendData: sendHorario, error: errorHorario, data } = useAddHorario()
 
 const submitHorario = async () => {
-  console.log('!')
   try {
     await sendHorario()
 

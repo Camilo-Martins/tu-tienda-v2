@@ -17,7 +17,6 @@ let notasList = ref([])
 const getNota = async () => {
   await sendData()
   notasList.value = data.value.data
-  console.log(notasList.value)
 }
 
 onMounted(() => {

@@ -62,13 +62,10 @@ export async function editProveedor(id, body) {
 }
 
 export async function getProveedorLista(body) {
-  const token = localStorage.getItem('user_token')
-
-  const response = await fetch(`${import.meta.env.VITE_API_STORE_URL}proveedores/obtener/lista`, {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}proveedores/obtener/lista`, {
     method: 'GET',
     headers: {
       'content-type': 'application/json',
-      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(body),
   })

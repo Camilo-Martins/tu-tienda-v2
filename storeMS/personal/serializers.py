@@ -151,8 +151,8 @@ class PersonalActiveSerializer(serializers.Serializer):
 
 class EditPersonalSerializer(serializers.Serializer):
     nombre_completo = serializers.CharField(
-        required=True,
-        allow_blank=False,
+        required=False,
+        allow_blank=True,
         max_length=100,
         validators=[
             RegexValidator(
@@ -185,6 +185,8 @@ class EditPersonalSerializer(serializers.Serializer):
         allow_blank=True,
         max_length=12
     )
+    
+    is_active = serializers.BooleanField(required=False, allow_null=False)
 
     def validate_telefono(self, value):
         """

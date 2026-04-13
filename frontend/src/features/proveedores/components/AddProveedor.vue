@@ -50,7 +50,7 @@ const submit = async (values, { resetForm }) => {
           type="text"
           name="rut"
           class="form-input"
-          placeholder="Ej: 12345678-9"
+          placeholder="Ej: 12.345.678-9"
         />
       </div>
 
@@ -60,7 +60,7 @@ const submit = async (values, { resetForm }) => {
           type="text"
           name="telefono"
           class="form-input"
-          placeholder="56912345678"
+          placeholder="34567899"
         />
       </div>
 

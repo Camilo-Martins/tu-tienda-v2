@@ -4,6 +4,17 @@ from .models import Producto
 
 class ProductoSerializer(serializers.ModelSerializer):
    
+    id = serializers.CharField(required=False, allow_blank=True)
+    proveedor = serializers.CharField(required=False, allow_blank=True)
+    nombre_producto = serializers.CharField(required=False, allow_blank=True)          
+    descripcion = serializers.EmailField(required=False, allow_blank=True)
+    precio = serializers.CharField(required=False, allow_blank=True)
+    categoria = serializers.CharField(required=False, allow_blank=True)
+    is_active = serializers.BooleanField(required=False)
+    observaciones = serializers.CharField(required=False, allow_blank=True)
+    
+
+
     class Meta:
         model = Producto
         fields = '__all__'
@@ -58,8 +69,8 @@ class NewProductoSerializer(serializers.Serializer):
 class EditarProductoSerializer(NewProductoSerializer):
     
     nombre_producto = serializers.CharField(
-        required=True,
-        allow_blank=False,
+        required=False,
+        allow_blank=True,
         max_length=30,
         validators=[
             RegexValidator(
@@ -96,6 +107,13 @@ class EditarProductoSerializer(NewProductoSerializer):
         }
     )
 
+    proveedor_id = serializers.CharField(
+        required=False,
+        error_messages={
+            'required': 'El proveedor es obligatorio.',
+            'invalid': 'Ingrese un ID de proveedor válido.',
+        }
+    )
 
     categoria_id = serializers.IntegerField(
         required=False,

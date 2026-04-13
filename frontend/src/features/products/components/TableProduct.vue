@@ -62,7 +62,7 @@ const saveEdit = async (producto) => {
         emit('updatedProducto')
         producto[field] = value
     } catch (error) {
-        trigger('Error al actualizar el producto', 'error')
+        trigger("Ingresar solo letras o números en los campos.")
     } finally {
         cancelEdit()
     }

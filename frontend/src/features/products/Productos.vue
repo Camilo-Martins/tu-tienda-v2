@@ -35,10 +35,10 @@ const fetchProductos = async () => {
             params.categoria = filtros.value.categoria
         }
 
+
     await sendData(params)
     productoslist.value = data.value.data
  } catch (error) {
-    console.log(error)
  }
 }
 const handleFiltersChange = async (filters) => {

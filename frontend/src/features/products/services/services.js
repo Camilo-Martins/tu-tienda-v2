@@ -1,10 +1,8 @@
 export async function addProducto(body) {
-  const token = localStorage.getItem('user_token')
-  const response = await fetch(`${import.meta.env.VITE_API_STORE_URL}productos/agregar`, {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}productos/agregar`, {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
-      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(body),
   })
@@ -35,7 +33,7 @@ export async function getProductos(params = {}) {
   }
 
   const queryString = query.toString()
-  const url = `${import.meta.env.VITE_API_STORE_URL}productos/obtener/${
+  const url = `${import.meta.env.VITE_API_URL}productos/obtener/${
     queryString ? `?${queryString}` : ''
   }`
 
@@ -43,7 +41,6 @@ export async function getProductos(params = {}) {
     method: 'GET',
     headers: {
       'content-type': 'application/json',
-      Authorization: `Bearer ${token}`,
     },
   })
 
@@ -60,13 +57,10 @@ export async function getProductos(params = {}) {
 }
 
 export async function editProducto(id, body) {
-  const token = localStorage.getItem('user_token')
-
-  const response = await fetch(`${import.meta.env.VITE_API_STORE_URL}productos/editar/${id}`, {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}productos/editar/${id}`, {
     method: 'PUT',
     headers: {
       'content-type': 'application/json',
-      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(body),
   })

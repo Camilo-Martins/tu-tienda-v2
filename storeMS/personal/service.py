@@ -46,7 +46,7 @@ class PersonalActiveListService:
 class EditPersonalService:
     @staticmethod
     @transaction.atomic
-    def editar_empleado(*, id, nombre_completo, telefono, pago_diario=None, rut=None):
+    def editar_empleado(*, id, nombre_completo=None, telefono=None, pago_diario=None, rut=None, is_active=None):
     
         empleado = get_object_or_404(
             Persona,
@@ -56,11 +56,12 @@ class EditPersonalService:
         if not pago_diario or pago_diario == None:
             pago_diario = 0
 
-        empleado.nombre_completo=nombre_completo
-        empleado.telefono=telefono
+        empleado.nombre_completo= empleado.nombre_completo = nombre_completo if nombre_completo else empleado.nombre_completo
+        empleado.telefono=telefono if telefono else empleado.telefono
         empleado.pago_diario = pago_diario if pago_diario else empleado.pago_diario
         empleado.rut = rut if rut is not None else empleado.rut
-        empleado.save(update_fields=["nombre_completo", "telefono", "pago_diario", "rut"])
+        empleado.is_active = is_active if is_active is not None else empleado.is_active
+        empleado.save(update_fields=["nombre_completo", "telefono", "pago_diario", "rut", "is_active"])
 
         return empleado
 
