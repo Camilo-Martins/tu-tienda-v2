@@ -20,7 +20,7 @@ class ProveedoresService:
 class NewProveedorService:
     @staticmethod
     @transaction.atomic
-    def crear_proveedor(*, nombre_completo, telefono, email, rut, 
+    def crear_proveedor(*, nombre_completo, telefono, email=None, rut=None, 
                         nombre_empresa, observaciones=None):
 
         proveedor = Proveedor.objects.create(
@@ -38,14 +38,14 @@ class NewProveedorService:
 class EditProveedorService:
     @staticmethod
     @transaction.atomic
-    def editar_proveedor(*, id, nombre_completo, telefono, email=None, rut=None, nombre_empresa=None, observaciones=None, is_active=None):
+    def editar_proveedor(*, id, nombre_completo=None, telefono=None, email=None, rut=None, nombre_empresa=None, observaciones=None, is_active=None):
         
         proveedor = get_object_or_404(
             Proveedor,
             id=id
         )
 
-        proveedor.nombre_completo = nombre_completo if nombre_completo is not None else proveedor.nombre_completo
+        proveedor.nombre_completo = proveedor.nombre_completo = nombre_completo if nombre_completo else proveedor.nombre_completo
         proveedor.telefono = telefono if telefono is not None else proveedor.telefono
         proveedor.email = email if email is not None else proveedor.email
         proveedor.rut = rut if rut is not None else proveedor.rut

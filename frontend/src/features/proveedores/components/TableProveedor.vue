@@ -77,7 +77,7 @@ const toggleEstado = async (proveedor) => {
     proveedor.is_active = nuevoEstado
     emit('updatedProveedor')
   } catch (error) {
-    console.log(error.value)
+    console.log(error)
     trigger("Error al actualizar proveedor")
    }
 }

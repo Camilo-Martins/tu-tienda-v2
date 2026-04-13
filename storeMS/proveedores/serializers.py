@@ -192,8 +192,8 @@ class NewProveedorSerializer(serializers.Serializer):
 
 class EditProveedorSerializer(serializers.Serializer):
     nombre_completo = serializers.CharField(
-        required=True,
-        allow_blank=False,
+        required=False,
+        allow_blank=True,
         max_length=100,
         validators=[
             RegexValidator(
@@ -232,8 +232,8 @@ class EditProveedorSerializer(serializers.Serializer):
        )
     
     nombre_empresa = serializers.CharField(
-        required=True,
-        allow_blank=False,
+        required=False,
+        allow_blank=True,
         max_length=100,
         validators=[
             RegexValidator(

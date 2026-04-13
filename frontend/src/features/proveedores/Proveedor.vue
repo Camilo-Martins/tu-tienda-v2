@@ -12,6 +12,7 @@ const fetchProveedores = async () => {
   await sendData()
 
   proveedoreslist.value = data.value.data
+  console.log(proveedoreslist.value)
 }
 
 onMounted(() => {
@@ -26,15 +27,15 @@ onMounted(() => {
       <h1 class="text-2xl font-semibold text-slate-800 uppercase">Proveedores</h1>
     </header>
 
-    <div class="grid grid-cols-12 gap-6">
-      <div class="col-span-3">
+    
+      <div >
         <AddProveedor @created="fetchProveedores" />
       </div>
 
-      <div class="col-span-9">
+      <div class="max-h-96 overflow-y-auto bg-white rounded-xl shadow-sm border border-slate-200">
         <TableProveedor :proveedoreslist="proveedoreslist" @updatedProveedor="fetchProveedores" />
       </div>
-    </div>
+  
   </section>
 </template>
 <style scoped></style>

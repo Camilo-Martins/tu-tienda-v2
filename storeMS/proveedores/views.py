@@ -1,5 +1,4 @@
 from rest_framework.views import APIView
-from django.http.response import JsonResponse
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -27,7 +26,7 @@ class ObtenerProveedores(APIView):
             proveedoresLists = ProveedoresService.obtener_proveedores_por_admin()
             datos_json = ObtenerProveedoresSerializer(proveedoresLists, many=True)
 
-            return Response({"estado":"ok","msg": datos_json.data}, status=status.HTTP_200_OK)
+            return Response({"estado":"ok","data": datos_json.data}, status=status.HTTP_200_OK)
 
         except ValueError as e:
             return Response(
@@ -54,7 +53,7 @@ class ObtenerProveedoresListBox(APIView):
 
             datos_json = ProveedoresListBoxSerializer(proveedoresLists, many=True)  
 
-            return JsonResponse({"estado":"ok","msg": datos_json.data},
+            return Response({"estado":"ok","data": datos_json.data},
                                  status=status.HTTP_200_OK)
         except ValueError as e:
             return Response(
@@ -105,7 +104,7 @@ class AgregarProveedor(APIView):
                 **serializer.validated_data
             )
 
-            return JsonResponse({"estado": "ok", "msg": "Registro exitoso"},status=201)
+            return Response({"estado": "ok", "data": "Registro exitoso"},status=201)
         except ValueError as e:
             return Response(
                 {
@@ -153,7 +152,7 @@ class EditarProveedor(APIView):
             return Response(
                 {
                     "estado": "error",
-                    "msg": "Error de validación",
+                    "msg": serializer.errors,
                     "errors": serializer.errors
                 },
                 status=status.HTTP_400_BAD_REQUEST

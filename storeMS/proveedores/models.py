@@ -6,8 +6,8 @@ class Proveedor(models.Model):
 
     nombre_completo = models.CharField(max_length=100)
     telefono = models.CharField(max_length=20, blank=False, null=False)
-    email = models.EmailField(max_length=50, blank=False, null=False, default="example@example.cl")
-    rut = models.CharField(max_length=20, blank=False, null=False)
+    email = models.EmailField(max_length=50, blank=True, null=True, default="correo@ejemplo.cl")
+    rut = models.CharField(max_length=20, blank=True, null=True)
     nombre_empresa = models.CharField(max_length=150, blank=False, null=False)
     is_active = models.BooleanField(default=True)
     observaciones = models.TextField(blank=True, null=True)

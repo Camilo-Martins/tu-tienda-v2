@@ -43,85 +43,65 @@ const submit = async (values, { resetForm }) => {
 
 <template>
   <!-- Formulario -->
-       <div class="grid grid-cols-12">
-            <div class="col-span-12">
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 mb-8">
+  <div class="grid grid-cols-12">
+    <div class="col-span-12">
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 mb-8">
+       <Form
+  :validation-schema="personalSchema"
+  @submit="submit"
+  class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end"
+>
+  <div class="form-field md:col-span-3">
+    <label class="block pb-2">Nombre</label>
+    <Field
+      type="text"
+      name="nombre_completo"
+      class="form-input"
+      placeholder="Ej: Camilo Álvarez"
+    />
+  </div>
 
-    <Form :validation-schema="personalSchema" @submit="submit" 
-   class="grid grid-cols-1 md:grid-cols-7
-                     gap-4 items-end">
-      <div class="form-field">
-        <div class="pb-3"><label class="form.label">Nombre</label>:</div>
+  <div class="form-field md:col-span-2">
+    <label class="block pb-2">RUT</label>
+    <Field type="text" name="rut" class="form-input" placeholder="Ej: 12.345.678-9" />
+  </div>
 
-        <Field
-          type="text"
-          name="nombre_completo"
-          class="form-input"
-         
-          placeholder="Ej: Camilo Álvarez"
-        />
+  <div class="form-field md:col-span-2">
+    <label class="block pb-2">Teléfono</label>
+    <Field type="text" name="telefono" class="form-input" placeholder="56912345678" />
+  </div>
+
+  <div class="form-field md:col-span-2">
+    <label class="block pb-2">Monto Pago</label>
+    <Field type="text" name="pago_diario" class="form-input" placeholder="Ej: $20.000" />
+  </div>
+
+  <div class="form-field md:col-span-1">
+    <BaseButton label="Agregar Personal" type="submit" class="w-full">
+      Agregar
+    </BaseButton>
+  </div>
+
+  <div class="form-field md:col-span-2">
+    <BaseButton
+      label="Generar Horario"
+      class="w-full bg-green-800 hover:bg-green-900"
+      type="button"
+      @click="submitHorario"
+    >
+      Generar Horario
+    </BaseButton>
+  </div>
+
+  <div class="form-field col-span-12">
+    <ErrorMessage name="nombre_completo" class=" text-red-600 italic col-span-2 " />
+    <ErrorMessage name="rut" class=" text-red-600 italic col-span-2 " />
+    <ErrorMessage name="telefono" class=" text-red-600 italic col-span-2 " />
+    <ErrorMessage name="pago_diario" class="text-red-600 italic col-span-2 " />
+  </div>
+</Form>
       </div>
-
-      <div class="form-field">
-        <div class="pb-3">
-          <label class="form.label">RUT</label>
-        </div>
-
-        <Field
-          type="text"
-          name="rut"
-          class="form-input"
-         
-          placeholder="Ej:12345678-9"
-        />
-      </div>
-
-      <div class="form-field">
-        <div class="pb-3">
-          <label class="form.label">Telefono</label>
-        </div>
-
-        <Field
-          type="text"
-          name="telefono"
-          class="form-input"
-         
-          placeholder="56912345678"
-        />
-      </div>
-
-      <div class="form-field">
-        <div class="py-3">
-          <label class="form.label">Monto Pago</label>
-        </div>
-        <Field
-          type="text"
-          name="pago_diario"
-          class="form-input"
-        
-          placeholder="Ej: $20.000"
-        />
-      </div>
-
-      <BaseButton label="Agregar Personal" type="submit"> Agregar </BaseButton>
-      <BaseButton
-        label="Generar Horario"
-        class="bg-green-800 hover:bg-green-900"
-        type="button"
-        @click="submitHorario"
-      >
-        Generar Horario
-      </BaseButton>
-        <div class="form-field col-span-12">
-       <ErrorMessage name="nombre_completo" class="text-red-600 col-span-6 italic" />
-         <ErrorMessage name="rut" class="text-red-600 col-span-6 italic" />
-           <ErrorMessage name="telefono" class="text-red-600 col-span-6 italic" />
-             <ErrorMessage name="pago_diario" class="text-red-600 col-span-6 italic" />
-      </div>
-    </Form>
     </div>
-    </div>
-        
   </div>
 </template>
 
