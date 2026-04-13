@@ -24,7 +24,6 @@ onMounted(() => {
     <!-- Header -->
     <header class="mb-6">
       <h1 class="text-2xl font-semibold text-slate-800 uppercase">Proveedores</h1>
-      <p class="text-sm text-slate-500">Gestión de Proveedores</p>
     </header>
 
     <div class="grid grid-cols-12 gap-6">

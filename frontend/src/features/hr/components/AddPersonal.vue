@@ -43,9 +43,13 @@ const submit = async (values, { resetForm }) => {
 
 <template>
   <!-- Formulario -->
-  <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 mb-8">
+       <div class="grid grid-cols-12">
+            <div class="col-span-12">
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 mb-8">
+
     <Form :validation-schema="personalSchema" @submit="submit" 
-    class="grid grid-cols-1 md:grid-cols-7 gap-4 items-end">
+   class="grid grid-cols-1 md:grid-cols-7
+                     gap-4 items-end">
       <div class="form-field">
         <div class="pb-3"><label class="form.label">Nombre</label>:</div>
 
@@ -115,7 +119,8 @@ const submit = async (values, { resetForm }) => {
              <ErrorMessage name="pago_diario" class="text-red-600 col-span-6 italic" />
       </div>
     </Form>
-    
+    </div>
+    </div>
         
   </div>
 </template>

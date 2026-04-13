@@ -1,10 +1,9 @@
 <script setup>
-import Notas from './notas/Notas.vue';
-
+import Notas from './notas/Notas.vue'
 </script>
 
 <template>
-<Notas/>
+  <Notas />
 </template>
 
 <style scoped></style>

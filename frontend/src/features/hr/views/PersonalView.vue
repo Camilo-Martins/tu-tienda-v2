@@ -50,14 +50,12 @@ const fetchHorario = async () => {
     <!-- Header -->
     <header class="mb-6">
       <h1 class="text-2xl font-semibold text-slate-800 uppercase">Personal</h1>
-      <p class="text-sm text-slate-500">Gestión básica de empleados de la tienda</p>
     </header>
 
-    <div class="grid grid-cols-12">
-      <div class="col-span-12">
+      <div>
         <AddPersonal @created="fetchEmployees" @generated="fetchHorario" />
       </div>
-    </div>
+ 
 
     <div class="grid grid-cols-12 gap-6">
       <div class="col-span-6">

@@ -1,11 +1,7 @@
 <script setup>
-import { computed, ref } from 'vue'
+import {  ref } from 'vue'
 import { useEditProveedor } from '../composables/composables'
 import useToast from '@/stores/useToast'
-import { useRouter, useRoute } from 'vue-router'
-
-const router = useRouter()
-const route = useRoute()
 
 const props = defineProps({
   proveedoreslist: {

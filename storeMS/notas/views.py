@@ -27,7 +27,7 @@ class ObtenerNotas(APIView):
 
             datos_json = ObtenerNotasSerializer(notasLists, many=True)
 
-            return Response({"estado": "ok",
+            return JsonResponse({"estado": "ok",
                              "data": datos_json.data},
                              status=status.HTTP_200_OK)
         except ValueError as e:

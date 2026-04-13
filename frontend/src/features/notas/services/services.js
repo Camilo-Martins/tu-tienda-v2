@@ -1,10 +1,8 @@
 export async function getNota(body) {
-  const token = localStorage.getItem('user_token')
-  const response = await fetch(`${import.meta.env.VITE_API_STORE_URL}notas/obtener`, {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}notas/obtener`, {
     method: 'GET',
     headers: {
       'content-type': 'application/json',
-      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(body),
   })
@@ -23,12 +21,10 @@ export async function getNota(body) {
 
 // services/registerService.ts
 export async function addNota(body) {
-  const token = localStorage.getItem('user_token')
-  const response = await fetch(`${import.meta.env.VITE_API_STORE_URL}notas/agregar`, {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}notas/agregar`, {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
-      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(body),
   })
@@ -46,13 +42,10 @@ export async function addNota(body) {
 }
 
 export async function editNota(id, body) {
-  const token = localStorage.getItem('user_token')
-
-  const response = await fetch(`${import.meta.env.VITE_API_STORE_URL}notas/editar/${id}`, {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}notas/editar/${id}`, {
     method: 'PUT',
     headers: {
       'content-type': 'application/json',
-      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(body),
   })
