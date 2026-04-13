@@ -21,5 +21,5 @@ export const personalSchema = yup.object({
     .matches(/^[\+]?[0-9]{7,15}$/, '*Formato válido: +1234567890 o 1234567890/ '),
   pago_diario: yup
     .string()
-    .matches(/[0-9]{1,4}$/, '*Ingrese un formato de pago válido, por ejemplo: $20000 o 20000'),
+    .matches(/[0-9]{1,4}/, '*Ingrese un formato de pago válido, por ejemplo 20000'),
 })

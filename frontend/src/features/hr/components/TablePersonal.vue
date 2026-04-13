@@ -60,7 +60,7 @@ const saveEdit = async (persona) => {
     emit('updatedPersonal')
     persona[field] = value
   } catch (error) {
-    trigger("Rut o Teléfono con formato incorrecto.")
+    trigger("Verifique que el formato del campo ingresado sea correcto.")
   } finally {
     cancelEdit()
   }

@@ -23,7 +23,7 @@ const submit = async () => {
     observaciones.value = ''
     emit('created')
   } catch (error) {
-    trigger('Nombre nota no debe ser vacío.')
+    trigger('Nombre nota debe tener un nombre.')
   }
 }
 </script>

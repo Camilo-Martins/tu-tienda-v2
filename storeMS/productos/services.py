@@ -30,7 +30,7 @@ class NewProductoService:
             descripcion=descripcion,
             precio=precio,
             categoria=categoria,
-            proveedor_id=1,
+            proveedor_id=proveedor_id,
             stock_actual=stock_actual,
             is_active=True,
         

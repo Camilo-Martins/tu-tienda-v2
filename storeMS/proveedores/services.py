@@ -47,10 +47,10 @@ class EditProveedorService:
         )
 
         proveedor.nombre_completo = proveedor.nombre_completo = nombre_completo if nombre_completo else proveedor.nombre_completo
-        proveedor.telefono = telefono if telefono is not None else proveedor.telefono
-        proveedor.email = email if email is not None else proveedor.email
-        proveedor.rut = rut if rut is not None else proveedor.rut
-        proveedor.nombre_empresa = nombre_empresa if nombre_empresa is not None else proveedor.nombre_empresa
+        proveedor.telefono        = proveedor.telefono = telefono if  telefono else proveedor.telefono
+        proveedor.email           = proveedor.email =  email if email else proveedor.email
+        proveedor.rut             = proveedor.rut = rut if rut  else proveedor.rut
+        proveedor.nombre_empresa  = proveedor.nombre_empresa = nombre_empresa if nombre_empresa else proveedor.nombre_empresa
         proveedor.observaciones = observaciones if observaciones is not None else proveedor.observaciones
         proveedor.is_active = is_active if is_active is not None else proveedor.is_active 
         proveedor.save(update_fields=["nombre_completo", "telefono", "email", "rut", "nombre_empresa", "observaciones", "is_active"])

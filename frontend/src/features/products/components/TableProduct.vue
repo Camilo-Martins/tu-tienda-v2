@@ -77,7 +77,7 @@ watch([categoriaSeleccionada, proveedorSeleccionado], () => {
 </script>
 
 <template>
-    <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm max-w-3xl">
+   <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 mb-8 h-[136px]">
         <h3 class="text-sm font-semibold text-slate-600 mb-3">Filtros</h3>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl">

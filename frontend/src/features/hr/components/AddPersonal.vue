@@ -35,7 +35,7 @@ const submit = async (values, { resetForm }) => {
     resetForm()
     emit('created')
   } catch (error) {
-    trigger(error)
+    trigger("Verifique que los datos tengan el formato correcto o no están asignados a otra persona")
   }
 }
 </script>
@@ -67,12 +67,12 @@ const submit = async (values, { resetForm }) => {
 
   <div class="form-field md:col-span-2">
     <label class="block pb-2">Teléfono</label>
-    <Field type="text" name="telefono" class="form-input" placeholder="56912345678" />
+    <Field type="text" name="telefono" class="form-input" placeholder="33456784" />
   </div>
 
   <div class="form-field md:col-span-2">
     <label class="block pb-2">Monto Pago</label>
-    <Field type="text" name="pago_diario" class="form-input" placeholder="Ej: $20.000" />
+    <Field type="number" name="pago_diario" class="form-input" placeholder="Ej: 20000" />
   </div>
 
   <div class="form-field md:col-span-1">

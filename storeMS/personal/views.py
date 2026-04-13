@@ -93,8 +93,8 @@ class RegistroEmpleado(APIView):
                 type=openapi.TYPE_OBJECT,
                 properties={
                     'nombre_completo': openapi.Schema(type=openapi.TYPE_STRING, description="nombre_completo"),
-                    'telefono': openapi.Schema(type=openapi.TYPE_STRING, description="telefono"),
-                    'pago_diario': openapi.Schema(type=openapi.TYPE_INTEGER, description="pago_diario"),
+                    'telefono': openapi.Schema(type=openapi.TYPE_NUMBER, description="telefono"),
+                    'pago_diario': openapi.Schema(type=openapi.TYPE_NUMBER, description="pago_diario"),
                     'rut': openapi.Schema(type=openapi.TYPE_STRING, description="rut")
                 },
                 required=['nombre_completo', 'telefono']
@@ -157,9 +157,9 @@ class EditarEmpleado(APIView):
                 type=openapi.TYPE_OBJECT,
                 properties={
                     'nombre_completo': openapi.Schema(type=openapi.TYPE_STRING, description="nombre_completo"),
-                    'telefono': openapi.Schema(type=openapi.TYPE_STRING, description="telefono"),
+                    'telefono': openapi.Schema(type=openapi.TYPE_NUMBER, description="telefono"),
 
-                    'pago_diario': openapi.Schema(type=openapi.TYPE_STRING, description="pago_diario"),
+                    'pago_diario': openapi.Schema(type=openapi.TYPE_NUMBER, description="pago_diario"),
                     'rut': openapi.Schema(type=openapi.TYPE_STRING, description="rut")
                 },
                 required=['nombre_completo', 'telefono']

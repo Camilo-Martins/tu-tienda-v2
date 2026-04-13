@@ -46,22 +46,12 @@ const submit = async (values, { resetForm }) => {
 
       <div class="form-field md:col-span-2">
         <label class="block pb-2">RUT</label>
-        <Field
-          type="text"
-          name="rut"
-          class="form-input"
-          placeholder="Ej: 12.345.678-9"
-        />
+        <Field type="text" name="rut" class="form-input" placeholder="Ej: 12.345.678-9" />
       </div>
 
       <div class="form-field md:col-span-2">
         <label class="block pb-2">Teléfono</label>
-        <Field
-          type="text"
-          name="telefono"
-          class="form-input"
-          placeholder="34567899"
-        />
+        <Field type="text" name="telefono" class="form-input" placeholder="34567899" />
       </div>
 
       <div class="form-field md:col-span-2">
@@ -76,22 +66,15 @@ const submit = async (values, { resetForm }) => {
 
       <div class="form-field md:col-span-2">
         <label class="block pb-2">Email</label>
-        <Field
-          type="text"
-          name="email"
-          class="form-input"
-          placeholder="Ej: correo@empresa.cl"
-        />
+        <Field type="text" name="email" class="form-input" placeholder="Ej: correo@empresa.cl" />
       </div>
 
       <div class="form-field md:col-span-1">
-        <BaseButton class="w-full" label="Agregar Proveedor" type="submit">
-          Agregar
-        </BaseButton>
+        <BaseButton class="w-full" label="Agregar Proveedor" type="submit"> Agregar </BaseButton>
       </div>
 
       <div class="form-field col-span-12">
-        <ErrorMessage name="nombre_completo" class="text-red-600 col-span-6 italic"/>
+        <ErrorMessage name="nombre_completo" class="text-red-600 col-span-6 italic" />
         <ErrorMessage name="rut" class="text-red-600 col-span-6 italic" />
         <ErrorMessage name="telefono" class="text-red-600 col-span-6 italic" />
         <ErrorMessage name="nombre_empresa" class="text-red-600 col-span-6 italic" />

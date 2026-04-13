@@ -14,14 +14,7 @@ from drf_yasg.utils import swagger_auto_schema
 # Create your views here.
 
 class ObtenerHorario(APIView):
-    @swagger_auto_schema(
-            operation_description="Endpoint Obtener horario por ID",
-            responses={
-                200:"Success",
-                400:"Bad Request",
-                500:"Internal Server Error"
-            },
-    )
+    swagger_schema = None
     def get(self, request):
     
         try: 
@@ -50,14 +43,7 @@ class ObtenerHorario(APIView):
             )
         
 class CrearHorario(APIView):
-    @swagger_auto_schema(
-            operation_description="Endpoint Creacion Horario ( Forma manual )",
-            responses={
-                201:"Success",
-                400:"Bad Request",
-                500:"Internal Server Error"
-            },
-    )
+    swagger_schema = None
     def post(self, request):
         
         try: 
@@ -86,14 +72,7 @@ class CrearHorario(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class AsignarSemana(APIView):
-    @swagger_auto_schema(
-            operation_description="Endpoint Creacion Horario ( Forma manual )",
-            responses={
-                201:"Success",
-                400:"Bad Request",
-                500:"Internal Server Error"
-            },
-    )
+    swagger_schema = None
     def post(self, request, id):
       
         serializer = AsignarDiaSerializer(data={ "id":id,  "data":request.data})
@@ -129,14 +108,7 @@ class AsignarSemana(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class DesasignarSemana(APIView):
-    @swagger_auto_schema(
-            operation_description="Endpoint Creacion Horario ( Forma manual )",
-            responses={
-                201:"Success",
-                400:"Bad Request",
-                500:"Internal Server Error"
-            },
-    )
+    swagger_schema = None
    
     def post(self, request, id):
     

@@ -57,10 +57,10 @@ class AgregarProducto(APIView):
                 type=openapi.TYPE_OBJECT,
                 properties={
                     'nombre_producto': openapi.Schema(type=openapi.TYPE_STRING, description="nombre_producto"),
-                    'proveedor': openapi.Schema(type=openapi.TYPE_STRING, description="proveedor"),
+                    'proveedor': openapi.Schema(type=openapi.TYPE_NUMBER, description="proveedor"),
                     'descripcion': openapi.Schema(type=openapi.TYPE_STRING, description="descripcion"),
-                    'precio': openapi.Schema(type=openapi.TYPE_STRING, description="precio"),
-                    'stock_actual': openapi.Schema(type=openapi.TYPE_STRING, description="stock_actual"),
+                    'precio': openapi.Schema(type=openapi.TYPE_NUMBER, description="precio"),
+                    'stock_actual': openapi.Schema(type=openapi.TYPE_NUMBER, description="stock_actual"),
                     'categoria': openapi.Schema(type=openapi.TYPE_STRING, description="categoria"),
                 },
                 required=['nombre_producto']
@@ -116,10 +116,10 @@ class EditarProducto(APIView):
                 type=openapi.TYPE_OBJECT,
                 properties={
                     'nombre_producto': openapi.Schema(type=openapi.TYPE_STRING, description="nombre_producto"),
-                    'proveedor': openapi.Schema(type=openapi.TYPE_STRING, description="proveedor"),
+                    'proveedor': openapi.Schema(type=openapi.TYPE_NUMBER, description="proveedor"),
                     'descripcion': openapi.Schema(type=openapi.TYPE_STRING, description="descripcion"),
-                    'precio': openapi.Schema(type=openapi.TYPE_STRING, description="precio"),
-                    'stock_actual': openapi.Schema(type=openapi.TYPE_STRING, description="stock_actual"),
+                    'precio': openapi.Schema(type=openapi.TYPE_NUMBER, description="precio"),
+                    'stock_actual': openapi.Schema(type=openapi.TYPE_NUMBER, description="stock_actual"),
                     'categoria': openapi.Schema(type=openapi.TYPE_STRING, description="categoria"),
                 },
                 required=['nombre_producto', 'proveedor']

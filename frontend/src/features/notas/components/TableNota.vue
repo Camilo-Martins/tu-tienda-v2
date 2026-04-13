@@ -56,7 +56,7 @@ const saveEdit = async (nota) => {
         nota[field] = value
          emit('updateNota')
     } catch (error) {
-        trigger("Nombre nota no debe ser vacío.")
+        trigger("Nombre nota debe tener un nombre.")
     } finally {
         cancelEdit()
     }
