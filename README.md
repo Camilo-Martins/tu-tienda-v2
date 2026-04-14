@@ -6,7 +6,7 @@ Aplicación web para gestionar información básica de un negocio, enfocada en s
 
 ## 🎥 Demo
 
-👉 [Ver video de demostración](LINK_DEL_VIDEO)
+👉 [Ver video de demostración](https://youtu.be/2TB3V0x6M08)
 
 ---
 

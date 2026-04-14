@@ -35,7 +35,7 @@ onMounted(() => {
       <AddNota @created="getNota" />
     </div>
 
-    <div class="max-h-96 overflow-y-auto bg-white rounded-xl shadow-sm border border-slate-200">
+    <div>
       <TableNota :notasList="notasList" @updateNota="getNota" />
     </div>
   </section>

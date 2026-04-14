@@ -29,7 +29,7 @@ const isActive = (name) => route.name === name
       <div class="flex items-center gap-2 text-sm font-bold capitalice">
         <RouterLink to="/panel/personal" class="nav-link px-5 hover:bg-white/20 transition px-3 py-1 rounded-md"
           :class="{ 'nav-active': isActive('personal') }">
-          Gesión de Personal
+          Personal
         </RouterLink>
 
         <RouterLink to="/panel/proveedores" class="nav-link px-5 hover:bg-white/20 transition px-3 py-1 rounded-md"

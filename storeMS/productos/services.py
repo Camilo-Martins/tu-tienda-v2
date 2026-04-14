@@ -51,13 +51,13 @@ class EditProductoService:
             id=id,
         )
 
-        producto.nombre_producto = nombre_producto if nombre_producto is not None else producto.nombre_producto
-        producto.descripcion = descripcion if descripcion is not None else producto.descripcion
-        producto.precio = precio if precio is not None else producto.precio
-        producto.proveedor_id = proveedor_id if proveedor_id is not None else proveedor_id
-        producto.categoria = categoria if categoria is not None else producto.categoria
-        producto.stock_actual = stock_actual if stock_actual is not None else producto.stock_actual
-        producto.is_active = is_active if is_active is not None else producto.is_active 
+        producto.nombre_producto = producto.nombre_producto = nombre_producto if nombre_producto else producto.nombre_producto
+        producto.descripcion =  producto.descripcion = descripcion if descripcion else producto.descripcion
+        producto.precio =  producto.precio = precio if precio else producto.precio
+        producto.proveedor_id =  producto.proveedor_id = proveedor_id if proveedor_id else producto.proveedor_id
+        producto.categoria =  producto.categoria = categoria if categoria else producto.categoria
+        producto.stock_actual =  producto.stock_actual = stock_actual if stock_actual else producto.stock_actual
+        producto.is_active =  producto.is_active = is_active if is_active else producto.is_active
         producto.save(update_fields=["nombre_producto", "descripcion", "precio", "categoria",  "stock_actual", "proveedor_id",
                                       "is_active"])
         return producto

@@ -30,7 +30,7 @@ onMounted(() => {
         <AddProveedor @created="fetchProveedores" />
       </div>
 
-      <div class="max-h-96 overflow-y-auto bg-white rounded-xl shadow-sm border border-slate-200">
+      <div>
         <TableProveedor :proveedoreslist="proveedoreslist" @updatedProveedor="fetchProveedores" />
       </div>
   

@@ -130,7 +130,7 @@ const toggleEstado = async (nota) => {
                                     ? 'px-3 py-1 text-sm rounded bg-green-100 text-green-700 hover:bg-green-200'
                                     : 'px-3 py-1 text-sm rounded bg-red-100 text-red-700 hover:bg-red-200'
                                 ">
-                                {{ nota.is_active ? 'Realizada' : 'Pendiente' }}
+                                {{ nota.is_active ? 'En proceso' : 'Finalizada' }}
                             </button>
                         </td>
                     </tr>
