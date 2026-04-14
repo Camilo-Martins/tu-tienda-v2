@@ -53,7 +53,6 @@ const saveEdit = async (producto) => {
         cancelEdit()
         return
     }
-
     try {
         await sendData(producto.id, {
             [field]: value,

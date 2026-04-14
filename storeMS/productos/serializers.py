@@ -64,6 +64,15 @@ class NewProductoSerializer(serializers.Serializer):
         required=False
     )
 
+    proveedor_id = serializers.CharField(
+        required=False,
+        error_messages={
+            'required': 'El proveedor es obligatorio.',
+            'invalid': 'Ingrese un ID de proveedor válido.',
+        }
+    )
+
+
     is_active = serializers.BooleanField(required=False, allow_null=False)
 
 class EditarProductoSerializer(NewProductoSerializer):

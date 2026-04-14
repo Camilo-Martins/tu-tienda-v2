@@ -25,6 +25,7 @@ class NewProductoService:
     @transaction.atomic
     def crear_producto(*, nombre_producto, descripcion=None, precio=0, categoria=None, proveedor_id=None, stock_actual=0):
 
+        print(proveedor_id)
         producto = Producto.objects.create(
             nombre_producto=nombre_producto,
             descripcion=descripcion,
