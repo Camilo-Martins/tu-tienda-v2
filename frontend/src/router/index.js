@@ -6,6 +6,8 @@ import Productos from '@/features/products/Productos.vue'
 import Error404 from '@/features/Error/views/Error404.vue'
 import PrivateLayout from '@/components/layout/PrivateLayout.vue'
 import Panel from '@/features/Panel.vue'
+import Publicidad from '@/features/publicidad/Publicidad.vue'
+import PublicidadActiva from '@/features/publicidad/PublicidadActiva.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -36,17 +38,17 @@ const router = createRouter({
         },
         {
           path: '/panel/publicidad',
-          name: 'proveedoress',
-          component: Proveedor,
+          name: 'publicidad',
+          component: Publicidad,
         },
-        {
-          path: '/panel/publicidad-activa',
-          name: 'proveedoresss',
-          component: Proveedor,
-        },
+       
       ],
     },
-
+    {
+        path: '/publicidad-activa',
+        name: 'publicidad-activa',
+        component: PublicidadActiva,
+      },
     {
       path: '/:pathMatch(.*)*',
       name: 'pagina-no-encontrada',

@@ -15,7 +15,7 @@ services:
 
   test:
     build: ./storems
-    command: pytest -q
+    command: pytest -v
     profiles:
     - test
     working_dir: /app

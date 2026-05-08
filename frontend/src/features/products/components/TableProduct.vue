@@ -114,8 +114,6 @@ watch([categoriaSeleccionada, proveedorSeleccionado], () => {
         </div>
     </div>
 
-    <br />
-
     <div class="max-h-54 overflow-y-auto rounded-xl shadow-sm border border-slate-200">
         <table
             class="min-w-full border-collapse text-sm overflow-y-auto bg-white rounded-xl shadow-sm border border-slate-200">

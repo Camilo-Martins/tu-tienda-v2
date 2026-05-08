@@ -53,16 +53,18 @@ onMounted(() => {
       <h1 class="text-2xl font-semibold text-slate-800 uppercase">Productos</h1>
     </header>
 
-    <div>
+     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="md:col-span-1">
       <AddProduct :proveedores="proveedores" @addProduct="fetchProductos" />
     </div>
-    <div >
+    <div class="md:col-span-2">
       <TableProduct
         :productoslist="productoslist"
         :proveedores="proveedores"
         @filters-change="handleFiltersChange"
         @updatedProducto="fetchProductos"
       />
+    </div>
     </div>
   </section>
 </template>

@@ -60,12 +60,12 @@ const onEliminarEmpleado = async (dia, personal) => {
 </script>
 
 <template>
-  <div class="max-h-96 overflow-y-auto rounded-xl shadow-sm border border-slate-200">
+  <div class="max-h-80 overflow-y-auto bg-white rounded-xl shadow-sm border border-slate-200">
     <div>
       <h5 class="text-center py-4 font-bold">{{ items.nombre? items.nombre: "Por favor genere un horario" }}</h5>
     </div>
     <table
-      class="min-w-full border-collapse text-sm overflow-y-auto bg-white rounded-xl shadow-sm border border-slate-200"
+      class="min-w-full border-collapse text-sm overflow-y-auto  rounded-xl shadow-sm border border-slate-200"
     >
       <thead class="bg-slate-100 text-slate-600">
         <tr>

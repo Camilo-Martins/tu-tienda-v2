@@ -25,15 +25,15 @@ onMounted(() => {
       <h1 class="text-2xl font-semibold text-slate-800 uppercase">Proveedores</h1>
     </header>
 
-    
-      <div >
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="md:col-span-1">
         <AddProveedor @created="fetchProveedores" />
       </div>
 
-      <div>
+      <div class="md:col-span-2">
         <TableProveedor :proveedoreslist="proveedoreslist" @updatedProveedor="fetchProveedores" />
       </div>
-  
+  </div>
   </section>
 </template>
 <style scoped></style>

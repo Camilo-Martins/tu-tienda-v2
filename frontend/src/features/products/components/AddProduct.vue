@@ -4,6 +4,7 @@ import BaseButton from '@/components/BaseButton.vue'
 import { useAddProducto } from '../composables/composables'
 import useToast from '@/stores/useToast'
 import { productSchema } from '../schemas/productSchema'
+import BaseInput from '@/components/BaseInput.vue'
 
 const props = defineProps({
   proveedores: {
@@ -37,42 +38,12 @@ const submit = async (values, { resetForm }) => {
 
 <template>
   <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 mb-8">
-    <Form
-      :validation-schema="productSchema"
-      @submit="submit"
-      class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end"
-    >
-      <div class="form-field md:col-span-2">
-        <label class="block pb-2">Nombre Producto</label>
-        <Field
-          type="text"
-          name="nombre_producto"
-          class="form-input"
-          placeholder="Ej: Arroz Grano Largo"
-        />
-      </div>
+    <Form :validation-schema="productSchema" @submit="submit" class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
+      <BaseInput label="Nombre Producto" name="nombre_producto" placeholder="Ej: Papas fritas 250g"
+        wrapperClass="md:col-span-6" />
 
-      <div class="form-field md:col-span-2">
-        <label class="block pb-2">Descripción</label>
-        <Field
-          type="text"
-          name="descripcion"
-          class="form-input"
-          placeholder="Ej: Arroz de grano largo de calidad"
-        />
-      </div>
 
-      <div class="form-field md:col-span-2">
-        <label class="block pb-2">Precio</label>
-        <Field
-          type="number"
-          name="precio"
-          class="form-input"
-          placeholder="Ej: 10000"
-        />
-      </div>
-
-      <div class="form-field md:col-span-2">
+      <div class="form-field md:col-span-6">
         <label class="block pb-2">Categoría</label>
         <Field as="select" class="form-input" name="categoria">
           <option value="" disabled>Seleccione</option>
@@ -88,31 +59,24 @@ const submit = async (values, { resetForm }) => {
         </Field>
       </div>
 
-      <div class="form-field md:col-span-2">
+      <BaseInput label="Descripción" name="descripcion" placeholder="Sabor Oregano marca chanchito feliz"
+        wrapperClass="md:col-span-12" />
+
+      <BaseInput label="Precio" name="Precio" placeholder="1000" wrapperClass="md:col-span-6" />
+
+      <BaseInput label="Stock" name="stock" placeholder="20" wrapperClass="md:col-span-6" />
+
+      <div class="form-field md:col-span-12">
         <label class="block pb-2">Proveedor</label>
         <Field as="select" class="form-input" name="proveedor">
           <option value="" disabled>Seleccionar</option>
-          <option
-            v-for="proveedor in proveedores"
-            :key="proveedor.id"
-            :value="proveedor.id"
-          >
+          <option v-for="proveedor in proveedores" :key="proveedor.id" :value="proveedor.id">
             {{ proveedor.nombre_completo }} - ({{ proveedor.nombre_empresa }})
           </option>
         </Field>
       </div>
 
-      <div class="form-field md:col-span-1">
-        <label class="block pb-2">Stock</label>
-        <Field
-          type="number"
-          name="stock"
-          class="form-input"
-          placeholder="Ej: 100"
-        />
-      </div>
-
-      <div class="form-field md:col-span-1">
+      <div class="form-field md:col-span-12">
         <BaseButton class="w-full" label="Agregar Producto" type="submit">
           Agregar
         </BaseButton>

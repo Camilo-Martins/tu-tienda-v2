@@ -41,8 +41,8 @@ const isActive = (name) => route.name === name
           :class="{ 'nav-active': isActive('productos') }">
           Productos
         </RouterLink>
-         <RouterLink to="/panel/productos" class="nav-link px-5 hover:bg-white/20 transition px-3 py-1 rounded-md"
-          :class="{ 'nav-active': isActive('productos') }">
+         <RouterLink to="/panel/publicidad" class="nav-link px-5 hover:bg-white/20 transition px-3 py-1 rounded-md"
+          :class="{ 'nav-active': isActive('publicidad') }">
           Publicidad
         </RouterLink>
       </div>

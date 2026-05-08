@@ -88,10 +88,7 @@ const toggleEstado = async (persona) => {
 </script>
 
 <template>
-  <div class="max-h-96 overflow-y-auto bg-white rounded-xl shadow-sm border border-slate-200">
-    <div>
-      <h5 class="text-center py-4 font-bold">Personal</h5>
-    </div>
+  <div class="max-h-80  overflow-y-auto bg-white rounded-xl shadow-sm border border-slate-200">
     <table
       class="min-w-full border-collapse text-sm overflow-y-auto bg-white rounded-xl shadow-sm border border-slate-200"
     >

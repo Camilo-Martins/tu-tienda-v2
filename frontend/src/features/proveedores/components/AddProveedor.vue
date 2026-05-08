@@ -1,6 +1,7 @@
 <script setup>
 import { Form, Field, ErrorMessage } from 'vee-validate'
 import BaseButton from '@/components/BaseButton.vue'
+import BaseInput from '@/components/BaseInput.vue'
 import useToast from '@/stores/useToast'
 import { useAddProveedor } from '../composables/composables'
 import { proveedorSchema } from '../schemas/proveedorSchema'
@@ -32,48 +33,50 @@ const submit = async (values, { resetForm }) => {
     <Form
       :validation-schema="proveedorSchema"
       @submit="submit"
-      class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end"
+     class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end"
     >
-      <div class="form-field md:col-span-3">
-        <label class="block pb-2">Representante</label>
-        <Field
-          type="text"
-          name="nombre_completo"
-          class="form-input"
-          placeholder="Ej: Camilo Álvarez"
-        />
-      </div>
+      <BaseInput
+      label="Representante"
+      name="nombre_completo"
+      placeholder="Ej: Juan Carlos B"
+      wrapperClass="md:col-span-12"
+    />
 
-      <div class="form-field md:col-span-2">
-        <label class="block pb-2">RUT</label>
-        <Field type="text" name="rut" class="form-input" placeholder="Ej: 12.345.678-9" />
-      </div>
+      <BaseInput
+      label="RUT"
+      name="rut"
+      placeholder="12.345.678-9"
+      wrapperClass="md:col-span-12"
+    />
 
-      <div class="form-field md:col-span-2">
-        <label class="block pb-2">Teléfono</label>
-        <Field type="text" name="telefono" class="form-input" placeholder="34567899" />
-      </div>
+      <BaseInput
+      label="Teléfono"
+      name="telefono"
+      placeholder="9876543"
+      wrapperClass="md:col-span-12"
+    />
 
-      <div class="form-field md:col-span-2">
-        <label class="block pb-2">Empresa</label>
-        <Field
-          type="text"
-          name="nombre_empresa"
-          class="form-input"
-          placeholder="Ej: Distribuidora Sur"
-        />
-      </div>
+      <BaseInput
+      label="Empresa"
+      name="nombre_empresa"
+      placeholder="Chanchito Feliz"
+      wrapperClass="md:col-span-12"
+    />
+    
+  <BaseInput
+      label="Email"
+      name="email"
+      placeholder="correo@empresa.cl"
+      wrapperClass="md:col-span-12"
+    />
 
-      <div class="form-field md:col-span-2">
-        <label class="block pb-2">Email</label>
-        <Field type="text" name="email" class="form-input" placeholder="Ej: correo@empresa.cl" />
-      </div>
+  
 
-      <div class="form-field md:col-span-1">
+      <div class="form-field md:col-span-12">
         <BaseButton class="w-full" label="Agregar Proveedor" type="submit"> Agregar </BaseButton>
       </div>
 
-      <div class="form-field col-span-12">
+      <div class="col-span-12 flex flex-col gap-1">
         <ErrorMessage name="nombre_completo" class="text-red-600 col-span-6 italic" />
         <ErrorMessage name="rut" class="text-red-600 col-span-6 italic" />
         <ErrorMessage name="telefono" class="text-red-600 col-span-6 italic" />
