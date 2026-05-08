@@ -22,7 +22,7 @@ jobs:
           MYSQL_DATABASE: store_db
           MYSQL_USER: store_db
           MYSQL_PASSWORD: store_db
-          MYSQL_ROOT_PASSWORD: root
+          MYSQL_ROOT_PASSWORD: rootpass
         ports:
           - 3306:3306
         options: >-
@@ -60,7 +60,7 @@ jobs:
       - name: Grant privileges to store_db user
         run: |
           mysql -h 127.0.0.1 -uroot -prootpass -e "GRANT ALL PRIVILEGES ON \`test_store_db\`.* TO 'store_db'@'%'; FLUSH PRIVILEGES;"
-          
+
       - name: Run migrations
         working-directory: storeMS
         env:
