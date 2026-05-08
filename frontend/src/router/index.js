@@ -34,6 +34,16 @@ const router = createRouter({
           name: 'proveedores',
           component: Proveedor,
         },
+        {
+          path: '/panel/publicidad',
+          name: 'proveedoress',
+          component: Proveedor,
+        },
+        {
+          path: '/panel/publicidad-activa',
+          name: 'proveedoresss',
+          component: Proveedor,
+        },
       ],
     },
 

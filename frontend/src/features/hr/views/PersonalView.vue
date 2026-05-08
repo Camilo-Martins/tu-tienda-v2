@@ -52,17 +52,16 @@ const fetchHorario = async () => {
       <h1 class="text-2xl font-semibold text-slate-800 uppercase">Personal</h1>
     </header>
 
-      <div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="md:col-span-1">
         <AddPersonal @created="fetchEmployees" @generated="fetchHorario" />
       </div>
- 
 
-    <div class="grid grid-cols-12 gap-6">
-      <div class="col-span-6">
-        <TablePersonal :items="personalList" :selected-id="selectedId" @persona-data="toPersona" @updated-personal="fetchEmployees"
-          @toggle-status="toggleEmployeeStatus" />
-      </div>
-      <div class="col-span-6">
+      <div class="md:col-span-2">
+        <TablePersonal :items="personalList" :selected-id="selectedId" @persona-data="toPersona"
+          @updated-personal="fetchEmployees" @toggle-status="toggleEmployeeStatus" />
+
+        <br>
         <SetTurnos :items="horarioData" :personallist="personalList" @addPersonal="fetchHorario"
           @deletePersonal="fetchHorario" />
       </div>

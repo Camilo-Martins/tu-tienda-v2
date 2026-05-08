@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'proveedores',
     'productos',
     'personal',
-    'horarios'
+    'horarios',
+    'publicidad'
     
 ]
 
@@ -104,11 +105,11 @@ WSGI_APPLICATION = 'storeMS.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": os.getenv('STORE_DB_NAME'),
-        "USER": os.getenv('STORE_DB_USER'),
-        "PASSWORD": os.getenv('STORE_DB_PASSWORD'),
-        "HOST": os.getenv('STORE_DB_HOST'),
-        "PORT": os.getenv('STORE_DB_PORT'),
+        "NAME": os.getenv('STORE_DB_NAME', "store_db"),
+        "USER": os.getenv('STORE_DB_USER', "store_db"),
+        "PASSWORD": os.getenv('STORE_DB_PASSWORD', "store_db"),
+        "HOST": os.getenv('STORE_DB_HOST', "127.0.0.1"),
+        "PORT": os.getenv('STORE_DB_PORT', "3306"),
         "OPTIONS": {
             "charset": "utf8mb4",
         },
@@ -156,3 +157,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"

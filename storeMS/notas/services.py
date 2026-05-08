@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404
 from django.core.exceptions import ValidationError
 from datetime import timedelta
 from django.db import transaction
-from .models import*
+from .models import Nota
 
 class NotasService:
     @staticmethod
@@ -18,11 +18,16 @@ class NewNotaService:
     @transaction.atomic
     def crear_nota(*,nombre_nota, observaciones=None):
 
+        if not nombre_nota:
+            raise ValidationError("El nombre es obligatorio")
+
         nota = Nota.objects.create(
             nombre_nota=nombre_nota,
             observaciones=observaciones,
             is_active=True,
         )
+
+        nota.full_clean()
 
         return nota
     

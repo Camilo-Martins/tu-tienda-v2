@@ -13,6 +13,20 @@ services:
     env_file:
       - .env
 
+  test:
+    build: ./storems
+    command: pytest -q
+    profiles:
+    - test
+    working_dir: /app
+    volumes:
+      - ./storems:/app
+    env_file:
+      - .env
+    depends_on:
+      store_db:
+        condition: service_healthy
+
   store_db:
     image: mysql:8
     container_name: store_db
@@ -23,6 +37,11 @@ services:
       MYSQL_ROOT_PASSWORD: root
     volumes:
       - store_db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   frontend:
     build: ./frontend

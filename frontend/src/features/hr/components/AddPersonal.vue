@@ -2,21 +2,21 @@
 import { Form, Field, ErrorMessage } from 'vee-validate'
 import { useAddPersonal } from '../composables/useAddPersonal'
 import BaseButton from '@/components/BaseButton.vue'
+import BaseInput from '@/components/BaseInput.vue'
 
 import useToast from '@/stores/useToast'
 import { useAddHorario } from '../composables/useHorario'
 import { personalSchema } from '../schemas/personalSchema'
-const { trigger } = useToast()
 
+const { trigger } = useToast()
 const { sendData } = useAddPersonal()
 
 const emit = defineEmits(['created', 'generated'])
-const { sendData: sendHorario, error: errorHorario, data } = useAddHorario()
+const { sendData: sendHorario, error: errorHorario } = useAddHorario()
 
 const submitHorario = async () => {
   try {
     await sendHorario()
-
     emit('generated')
   } catch (error) {
     trigger(errorHorario)
@@ -41,67 +41,77 @@ const submit = async (values, { resetForm }) => {
 </script>
 
 <template>
-  <!-- Formulario -->
   <div class="grid grid-cols-12">
     <div class="col-span-12">
       <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 mb-8">
-       <Form
-  :validation-schema="personalSchema"
-  @submit="submit"
-  class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end"
->
-  <div class="form-field md:col-span-3">
-    <label class="block pb-2">Nombre</label>
-    <Field
-      type="text"
-      name="nombre_completo"
-      class="form-input"
-      placeholder="Ej: Camilo Álvarez"
-    />
-  </div>
 
-  <div class="form-field md:col-span-2">
-    <label class="block pb-2">RUT</label>
-    <Field type="text" name="rut" class="form-input" placeholder="Ej: 12.345.678-9" />
-  </div>
+        <Form
+          :validation-schema="personalSchema"
+          @submit="submit"
+          class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end"
+        >
 
-  <div class="form-field md:col-span-2">
-    <label class="block pb-2">Teléfono</label>
-    <Field type="text" name="telefono" class="form-input" placeholder="33456784" />
-  </div>
+          <!-- Nombre -->
+          <BaseInput
+            label="Nombre"
+            name="nombre_completo"
+            placeholder="Beatriz"
+            wrapperClass="md:col-span-12"
+          />
 
-  <div class="form-field md:col-span-2">
-    <label class="block pb-2">Monto Pago</label>
-    <Field type="number" name="pago_diario" class="form-input" placeholder="Ej: 20000" />
-  </div>
+          <!-- RUT -->
+          <BaseInput
+            label="RUT"
+            name="rut"
+            placeholder="12.345.678-9"
+            wrapperClass="md:col-span-12"
+          />
 
-  <div class="form-field md:col-span-1">
-    <BaseButton label="Agregar Personal" type="submit" class="w-full">
-      Agregar
-    </BaseButton>
-  </div>
+          <!-- Teléfono -->
+          <BaseInput
+            label="Teléfono"
+            name="telefono"
+            placeholder="33456784"
+            wrapperClass="md:col-span-12"
+          />
 
-  <div class="form-field md:col-span-2">
-    <BaseButton
-      label="Generar Horario"
-      class="w-full bg-green-800 hover:bg-green-900"
-      type="button"
-      @click="submitHorario"
-    >
-      Generar Horario
-    </BaseButton>
-  </div>
+          <!-- Pago diario -->
+          <BaseInput
+            label="Monto Pago"
+            name="pago_diario"
+            placeholder="20000"
+            wrapperClass="md:col-span-12"
+          />
 
-  <div class="form-field col-span-12">
-    <ErrorMessage name="nombre_completo" class=" text-red-600 italic col-span-2 " />
-    <ErrorMessage name="rut" class=" text-red-600 italic col-span-2 " />
-    <ErrorMessage name="telefono" class=" text-red-600 italic col-span-2 " />
-    <ErrorMessage name="pago_diario" class="text-red-600 italic col-span-2 " />
-  </div>
-</Form>
+          <!-- Botón agregar -->
+          <div class="md:col-span-12">
+            <BaseButton type="submit" class="w-full">
+              Agregar
+            </BaseButton>
+          </div>
+
+          <!-- Botón generar -->
+          <div class="md:col-span-12">
+            <BaseButton
+              type="button"
+              class="w-full bg-green-800 hover:bg-green-900"
+              @click="submitHorario"
+            >
+              Generar Horario
+            </BaseButton>
+          </div>
+
+          <!-- Errores -->
+          <div class="col-span-12 flex flex-col gap-1">
+            <ErrorMessage name="nombre_completo" class="text-red-600 italic" />
+            <ErrorMessage name="rut" class="text-red-600 italic" />
+            <ErrorMessage name="telefono" class="text-red-600 italic" />
+            <ErrorMessage name="pago_diario" class="text-red-600 italic" />
+          </div>
+
+        </Form>
+
       </div>
     </div>
   </div>
 </template>
-
-<style scoped></style>

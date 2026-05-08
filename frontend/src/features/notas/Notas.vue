@@ -30,14 +30,19 @@ onMounted(() => {
       <h1 class="text-2xl font-semibold text-slate-800 uppercase">Agrega Recordatorios</h1>
     </header>
 
-    <!-- Agregar una nota -->
-    <div>
-      <AddNota @created="getNota" />
-    </div>
+   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-    <div>
-      <TableNota :notasList="notasList" @updateNota="getNota" />
-    </div>
+  <div class="md:col-span-1">
+    <AddNota @created="getNota" />
+  </div>
+
+  <div class="md:col-span-2">
+    <TableNota :notasList="notasList" @updateNota="getNota" />
+  </div>
+
+</div>
+     
+   
   </section>
 </template>
 

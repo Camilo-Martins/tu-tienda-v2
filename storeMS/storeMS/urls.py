@@ -51,6 +51,7 @@ urlpatterns = [
     path('api/v1/productos/', include('productos.urls')),
     path('api/v1/personal/', include('personal.urls')),
     path('api/v1/horarios/', include('horarios.urls')),
+    path('api/v1/publicidad/', include('publicidad.urls')),
 
 
      #rutas swagger

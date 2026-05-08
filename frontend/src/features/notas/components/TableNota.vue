@@ -82,62 +82,88 @@ const toggleEstado = async (nota) => {
 </script>
 
 <template>
-    <section>
-        <div class="max-h-96 overflow-y-auto bg-white rounded-xl shadow-sm border border-slate-200">
-            <table
-                class="min-w-full border-collapse text-sm overflow-y-auto bg-white rounded-xl shadow-sm border border-slate-200">
-                <thead class="bg-slate-100 text-slate-600">
-                    <tr>
-                        <th class="px-4 py-3 text-left" colspan="1">Nombre</th>
-                        <th class="px-4 py-3 text-left" colspan="11">Detalle</th>
-                        <th class="px-4 py-3 text-center" colspan="1">Estado</th>
-                    </tr>
-                </thead>
+  <section>
+    <div class="max-h-96 overflow-y-auto bg-white rounded-xl shadow-sm border border-slate-200">
+      
+      <table class="min-w-full text-sm border-collapse">
+        
+        <thead class="bg-slate-100 text-slate-600">
+          <tr>
+            <th class="px-4 py-3 text-left w-1/4">Nombre</th>
+            <th class="px-4 py-3 text-left w-2/4">Detalle</th>
+            <th class="px-4 py-3 text-center w-1/4">Estado</th>
+          </tr>
+        </thead>
 
-                <tbody>
-                    <tr v-for="nota in notasList" :key="nota.id" class="border-t hover:bg-slate-200"
-                        title="Haz doble clic para editar" :class="[
-                            editing.id === nota.id ? 'bg-blue-100 ring-1 ring-blue-400' : 'hover:bg-slate-200',
-                        ]">
-                        <!-- NOMBRE -->
-                        <td class="px-4 py-3 text-left truncate max-w-xs" colspan="1">
-                            <input v-if="editing.id === nota.id && editing.field === 'nombre_nota'"
-                                v-model="editing.value" type="text"
-                                class="w-full rounded border border-slate-300 px-2 py-1" @blur="saveEdit(nota)"
-                                @keyup.enter="saveEdit(nota)" @keyup.esc="cancelEdit" />
+        <tbody>
+          <tr
+            v-for="nota in notasList"
+            :key="nota.id"
+            class="border-t transition"
+            :class="editing.id === nota.id
+              ? 'bg-blue-100 ring-1 ring-blue-400'
+              : 'hover:bg-slate-100'"
+          >
 
-                            <span v-else class="block w-full cursor-pointer" @click="startEdit(nota, 'nombre_nota')">
-                                {{ nota.nombre_nota }}
-                            </span>
-                        </td>
+            <!-- NOMBRE -->
+            <td class="px-4 py-3 align-top">
+              <input
+                v-if="editing.id === nota.id && editing.field === 'nombre_nota'"
+                v-model="editing.value"
+                type="text"
+                class="w-full rounded border border-slate-300 px-2 py-1"
+                @blur="saveEdit(nota)"
+                @keyup.enter="saveEdit(nota)"
+                @keyup.esc="cancelEdit"
+              />
 
-                        <!-- OBSERVACIONES -->
-                        <td class="px-4 py-3 text-left truncate max-w-xs" colspan="11">
-                            <textarea v-if="editing.id === nota.id && editing.field === 'observaciones'"
-                                v-model="editing.value" rows="3"
-                                class="w-full rounded border border-slate-300 px-2 py-1 resize-none"
-                                @blur="saveEdit(nota)" @keyup.esc="cancelEdit"></textarea>
+              <span
+                v-else
+                class="block cursor-pointer truncate"
+                @click="startEdit(nota, 'nombre_nota')"
+              >
+                {{ nota.nombre_nota }}
+              </span>
+            </td>
 
-                            <span v-else class="block w-full cursor-pointer whitespace-pre-line"
-                                @click="startEdit(nota, 'observaciones')">
-                                {{ nota.observaciones ? nota.observaciones : 'Sin detalles' }}
-                            </span>
-                        </td>
+            <!-- DETALLE -->
+            <td class="px-4 py-3 align-top">
+              <textarea
+                v-if="editing.id === nota.id && editing.field === 'observaciones'"
+                v-model="editing.value"
+                rows="3"
+                class="w-full rounded border border-slate-300 px-2 py-1 resize-none"
+                @blur="saveEdit(nota)"
+                @keyup.esc="cancelEdit"
+              />
 
-                        <!-- ESTADO -->
-                        <td class="px-4 py-3 text-center" colspan="1">
-                            <button @click="toggleEstado(nota)" :class="nota.is_active
-                                    ? 'px-3 py-1 text-sm rounded bg-green-100 text-green-700 hover:bg-green-200'
-                                    : 'px-3 py-1 text-sm rounded bg-red-100 text-red-700 hover:bg-red-200'
-                                ">
-                                {{ nota.is_active ? 'En proceso' : 'Finalizada' }}
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </section>
+              <span
+                v-else
+                class="block cursor-pointer whitespace-pre-line"
+                @click="startEdit(nota, 'observaciones')"
+              >
+                {{ nota.observaciones || 'Sin detalles' }}
+              </span>
+            </td>
+
+            <!-- ESTADO -->
+            <td class="px-4 py-3 text-center align-middle">
+              <button
+                @click="toggleEstado(nota)"
+                :class="nota.is_active
+                  ? 'px-3 py-1 text-sm rounded bg-green-100 text-green-700 hover:bg-green-200'
+                  : 'px-3 py-1 text-sm rounded bg-red-100 text-red-700 hover:bg-red-200'"
+              >
+                {{ nota.is_active ? 'En proceso' : 'Finalizada' }}
+              </button>
+            </td>
+
+          </tr>
+        </tbody>
+
+      </table>
+    </div>
+  </section>
 </template>
 
 <style scoped></style>

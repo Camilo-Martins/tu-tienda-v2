@@ -9,3 +9,9 @@ python-jose
 django-cors-headers
 drf-yasg
 setuptools
+Pillow
+selenium
+pytest
+pytest-django
+pytest-html
+pytest-slack

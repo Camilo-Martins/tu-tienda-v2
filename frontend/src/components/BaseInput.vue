@@ -1,21 +1,34 @@
-<script setup lang="ts">
-defineProps<{
-  label: string
-  type?: string
-  placeholder?: string
-}>()
+<script setup>
+defineProps({
+  label: String,
+  name: String,
+  type: {
+    type: String,
+    default: 'text'
+  },
+  placeholder: String,
+  modelValue: String,
+  wrapperClass: {
+    type: String,
+    default: ''
+  }
+})
+
+const emit = defineEmits(['update:modelValue'])
+import { Field } from 'vee-validate'
 </script>
 
 <template>
-  <div class="space-y-1">
-    <label class="block text-sm font-medium text-gray-700">
-      {{ label }}
-    </label>
+  <div :class="wrapperClass">
+    <label class="block pb-2">{{ label }}</label>
 
-    <input
-      :type="type || 'text'"
+    <Field
+      :type="type"
+      :name="name"
+      class="form-input"
       :placeholder="placeholder"
-      class="w-full rounded-lg bg-gray-50 border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      :modelValue="modelValue"
+      @update:modelValue="emit('update:modelValue', $event)"
     />
   </div>
 </template>
