@@ -11,6 +11,10 @@ jobs:
     name: Django Tests (MySQL)
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: storeMs
+
     services:
       mysql:
         image: mysql:8.0
