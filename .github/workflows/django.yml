@@ -59,6 +59,7 @@ jobs:
           done
 
       - name: Run migrations
+        working-directory: storeMS
         env:
           DB_NAME: store_db
           DB_USER: store_db
