@@ -46,7 +46,7 @@ jobs:
           sudo apt-get install -y default-libmysqlclient-dev build-essential
 
       - name: Install Python dependencies
-        working-directory: storeMS
+        working-directory: backend
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
@@ -62,24 +62,24 @@ jobs:
           mysql -h 127.0.0.1 -uroot -prootpass -e "GRANT ALL PRIVILEGES ON \`test_store_db\`.* TO 'store_db'@'%'; FLUSH PRIVILEGES;"
 
       - name: Run migrations
-        working-directory: storeMS
+        working-directory: backend
         env:
-          DB_NAME: store_db
-          DB_USER: store_db
-          DB_PASSWORD: store_db
-          DB_HOST: 127.0.0.1
-          DB_PORT: 3306
+          STORE_DB_NAME: store_db
+          STORE_DB_USER: store_db
+          STORE_DB_PASSWORD: store_db
+          STORE_DB_HOST: 127.0.0.1
+          STORE_DB_PORT: 3306
         run: |
           python manage.py migrate
 
       - name: Run tests
         env:
-          DB_NAME: store_db
-          DB_USER: store_db
-          DB_PASSWORD: store_db
-          DB_HOST: 127.0.0.1
-          DB_PORT: 3306
-          DJANGO_SETTINGS_MODULE: storeMS.settings
-        working-directory: storeMS
+          STORE_DB_NAME: store_db
+          STORE_DB_USER: store_db
+          STORE_DB_PASSWORD: store_db
+          STORE_DB_HOST: 127.0.0.1
+          STORE_DB_PORT: 3306
+          DJANGO_SETTINGS_MODULE: config.settings
+        working-directory: backend
         run: |
           pytest -q

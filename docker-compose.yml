@@ -1,26 +1,37 @@
 version: '3.9'
 
 services:
-  storems:
-    build: ./storems
-    container_name: storems
+  migrate:
+    build: ./backend
+    command: python manage.py migrate
     volumes:
-      - ./storems:/app
+      - ./backend:/app
+    env_file:
+      - .env
+    depends_on:
+      store_db:
+        condition: service_healthy
+
+  backend:
+    build: ./backend
+    volumes:
+      - ./backend:/app
     ports:
       - '8000:8000'
     depends_on:
-      - store_db
+      migrate:
+        condition: service_completed_successfully
     env_file:
       - .env
 
   test:
-    build: ./storems
+    build: ./backend
     command: pytest -v
     profiles:
-    - test
+      - test
     working_dir: /app
     volumes:
-      - ./storems:/app
+      - ./backend:/app
     env_file:
       - .env
     depends_on:
@@ -34,7 +45,7 @@ services:
       MYSQL_DATABASE: ${STORE_DB_NAME}
       MYSQL_USER: ${STORE_DB_USER}
       MYSQL_PASSWORD: ${STORE_DB_PASSWORD}
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: ${STORE_DB_ROOT_PASSWORD:-root}
     volumes:
       - store_db_data:/var/lib/mysql
     healthcheck:
@@ -51,7 +62,7 @@ services:
     ports:
       - '5173:5173'
     depends_on:
-      - storems
+      - backend
 
 volumes:
   store_db_data:
