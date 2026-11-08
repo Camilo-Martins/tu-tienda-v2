@@ -44,6 +44,8 @@ Backend: crea un entorno virtual, instala `backend/requirements.txt` y ejecuta `
 
 Frontend: desde `frontend/`, ejecuta `npm install` y `npm run dev`. Define `VITE_API_URL` en `frontend/.env` para apuntar a la API.
 
+El punto de venta se organiza en `frontend/src/features/ventas/` y expone las vistas `/panel/ventas`, `/panel/historial-ventas` y `/panel/clientes`. La API nueva y ejemplos de solicitudes manuales están documentados en [`backend/ventas/README.md`](backend/ventas/README.md).
+
 ## Tecnologías
 
 - Backend: Django y Django REST Framework

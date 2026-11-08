@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'productos',
     'personal',
     'horarios',
-    'publicidad'
+    'publicidad',
+    'ventas.apps.VentasConfig',
     
 ]
 
